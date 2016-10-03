@@ -12,3 +12,7 @@ app.use('/', function(req, res) {
 http.listen(3000, function(){
   console.log('Loaded Questions serving! Listening on *:3000 for http requests.');
 });
+
+//for heroku
+var port = process.env.PORT || 3000;
+http.listen(port);
