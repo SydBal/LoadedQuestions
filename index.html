@@ -15,7 +15,9 @@
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!--Custom CSS-->
     <style type="text/css">
+
     	.halfscreen{
+    		position:relative;
     		height:50%;
     		margin-bottom: 0;
     		text-align: center;
@@ -30,18 +32,35 @@
     		height:65%;
     		color: navy;
     	}
+    	#topText{
+    		width:100%;
+    		text-align: center;
+    		position: absolute;
+    		bottom:0;
+    	}
+    	#botText{
+    		width:100%;
+    		text-align: center;
+    		position: absolute;
+    		top:0;
+    		overflow-y: auto;
+    	}
     </style>
   </head>
   <body>
 		<div id="topTron" class="jumbotron halfscreen">
-			<h1 id="topText">
-				Hi<br><br><br><br><br><br><br><br><br><br>Hi
-			</h1>
+			<div id="topText">
+				<h1>
+					Loaded Questions
+				</h1>
+			</div>
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
-			<h1 id="botText">
-				World<br><br><br><br><br><br><br><br><br><br>Hi
-			</h1>
+			<div id="botText">
+				<h1>
+					Soon to be a game. Here is some sample TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT 
+				</h1>
+			</div>
 		</div>
 		<!-- Bootstrap core JavaScript-->
 		<!-- jQuery library -->
