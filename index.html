@@ -84,6 +84,10 @@
     		margin:8px;
     		padding:6px 12px;
     	}
+      .rnd-gb{
+        border-width: 2px;
+        text-shadow: none;
+      }
     	#instr{
     		text-shadow: none;    		
     	}
@@ -93,12 +97,25 @@
       #playersignupinput {
         color:navy;
         background-color:rgba(0,0,0,0);
-        margin:8px;
-        margin-top: 18px;
+        margin:18px 8px;
         padding:3px 6px;
         border:solid;
         border-radius:2px;
         border-width: 1px;
+        max-width: 50%
+      }
+      #playersignuplist{
+        text-shadow: none;
+        list-style: none;
+        padding:0;
+        margin-top:15px;
+        word-wrap: break-word;
+      }
+      #addplayerbtn{
+        border-radius: 100%
+      }
+      #removeplayerbtn{
+        border-radius: 100%
       }
     </style>
   </head>
@@ -125,10 +142,13 @@
 					</div>
 				</div>
         <div id="playersignup">
-          <ul ng-repeat="player in players">
-              <li>{{ player.name }}</li>
+          <h4 style="margin-bottom:0">
+          <ul ng-repeat="player in players" id="playersignuplist">
+              <li><!--{{$index + 1}}-->{{ player.name }} <button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
           </ul>
-          <input type="text" id="playersignupinput"></div>
+          <input type="text" id="playersignupinput"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb">+</button><br>
+          </h4>
+          <button class="gamebtn" style="margin:0"><h3 style="margin:0">Start</h3></button>
         </div>
 			</div>
 <!--
@@ -243,6 +263,21 @@
 			    }
 			  };
 			  
+        $scope.addPlayer = function(){
+          if($('#playersignupinput').val() != ''){
+            $scope.players.push({"name":$("#playersignupinput").val()})
+            $("#playersignupinput").val('')
+          };
+        };
+
+        $scope.removePlayer = function(pname){
+          for(var i = $scope.players.length - 1; i >= 0; i--) {
+            if($scope.players[i].name == pname) {
+              $scope.players.splice(i, 1);
+            };
+          };
+        };
+
 			});
 		</script>
   </body>
