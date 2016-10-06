@@ -51,6 +51,7 @@
         color:rgba(0,0,0,.3);
         font-size:3em;
         margin:2px;
+        cursor: default;
       }
     	#botTron{
     		height:65%;
@@ -86,6 +87,19 @@
     	#instr{
     		text-shadow: none;    		
     	}
+      #playersignup {
+        display:none;
+      }
+      #playersignupinput {
+        color:navy;
+        background-color:rgba(0,0,0,0);
+        margin:8px;
+        margin-top: 18px;
+        padding:3px 6px;
+        border:solid;
+        border-radius:2px;
+        border-width: 1px;
+      }
     </style>
   </head>
   <body ng-controller="myController">
@@ -95,7 +109,7 @@
 				<h1>
 					<strong><em><span style="text-shadow: 2px 2px #ff0000;">L</span></em></strong>oaded <strong><em><span style="text-shadow: 2px 2px #ff0000;">Q</span></em></strong>uestions
 				</h1>
-        <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Game Setup</h3>
+        <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
 			</div>		
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
@@ -110,44 +124,51 @@
 						</div>
 					</div>
 				</div>
+        <div id="playersignup">
+          <ul ng-repeat="player in players">
+              <li>{{ player.name }}</li>
+          </ul>
+          <input type="text" id="playersignupinput"></div>
+        </div>
 			</div>
-
-	<div class="container" ng-controller="myController" hidden="true">
-    <h1>Welcome to the GA Camping Store</h1>
-    <br/>
-    <h4>Search: <input type="text" ng-model="searchText"></h4> 
-    <br/>
-    <div class="row">
-      <table class="table col-md-9 col-md-offset-3">
-        <tr>
-          <th>Category</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th>Qty</th>
-          <th>Total</th>
-          <th>Action</th>
-        </tr>
-        <tr ng-repeat="item in inventory | filter:searchText | orderBy:'category'">
-          <td>{{ item.category }}</td>
-          <td>{{ item.description }}</td>
-          <td ng-class="{ 'on-sale' : item.onSale }">{{ item.price | currency }}</td>
-          <td><input type="number" min="0" class="qty" ng-model="item.qty"></td>
-          <td>{{ item.qty * item.price | currency }}</td>
-          <td><button class="btn-primary" ng-click="addItem(item);">Add</button></td>
-        </tr>
-      </table>
-    </div>
-    <div class="row">
-      <h2>Your Cart:</h2>
-      <ul>
-        <li ng-repeat="item in cart | orderBy:'category'">{{ item.qty + ' x ' + item.description }}</li>
-      </ul>
+<!--
+  	<div class="container" ng-controller="myController" hidden="true">
+      <h1>Welcome to the GA Camping Store</h1>
+      <br/>
+      <h4>Search: <input type="text" ng-model="searchText"></h4> 
+      <br/>
+      <div class="row">
+        <table class="table col-md-9 col-md-offset-3">
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+          <tr ng-repeat="item in inventory | filter:searchText | orderBy:'category'">
+            <td>{{ item.category }}</td>
+            <td>{{ item.description }}</td>
+            <td ng-class="{ 'on-sale' : item.onSale }">{{ item.price | currency }}</td>
+            <td><input type="number" min="0" class="qty" ng-model="item.qty"></td>
+            <td>{{ item.qty * item.price | currency }}</td>
+            <td><button class="btn-primary" ng-click="addItem(item);">Add</button></td>
+          </tr>
+        </table>
       </div>
+      <div class="row">
+        <h2>Your Cart:</h2>
+        <ul>
+          <li ng-repeat="item in cart | orderBy:'category'">{{ item.qty + ' x ' + item.description }}</li>
+        </ul>
+        </div>
 
-      <pre>Total Amount of items in cart goes here</pre>
-    </div>
-
+        <pre>Total Amount of items in cart goes here</pre>
+      </div>
 		</div>
+    -->
+
 		<!-- Bootstrap core JavaScript-->
 		<!-- jQuery library -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
@@ -176,6 +197,7 @@
       $("#newgamebtn").click(function(){
         $("#newgamebtn").prop('disabled', true);
         $("#titlescreenbot").fadeToggle(function(){
+          $("#playersignup").fadeToggle(100)
           $("#helpbutton").fadeToggle(3000)
           $("#gamesetuptitle").slideDown()
         })
@@ -202,6 +224,8 @@
 			  ];
 			  
 			  $scope.cart = [];
+
+        $scope.players = [];
 			  
 			  var findItemById = function(items, id) {
 			    return _.find(items, function(item) {
