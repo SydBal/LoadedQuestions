@@ -108,14 +108,16 @@
         text-shadow: none;
         list-style: none;
         padding:0;
-        margin-top:15px;
+        margin-top:0px;
+        margin-bottom: 2px;
         word-wrap: break-word;
       }
       #addplayerbtn{
         border-radius: 100%
       }
       #removeplayerbtn{
-        border-radius: 100%
+        border-radius: 100%;
+        margin:2px 6px;
       }
     </style>
   </head>
@@ -142,7 +144,7 @@
 					</div>
 				</div>
         <div id="playersignup">
-          <h4 style="margin-bottom:0">
+          <h4 style="margin-bottom:0;margin-top:15px;1">
           <ul ng-repeat="player in players" id="playersignuplist">
               <li><!--{{$index + 1}}-->{{ player.name }} <button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
           </ul>
