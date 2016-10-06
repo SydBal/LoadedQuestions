@@ -24,7 +24,7 @@
     		margin-bottom: 0;
     		text-align: center;
     		overflow-y: auto;
-    		    text-shadow: 1px 1px #ff0000;
+    		text-shadow: 1px 1px #ff0000;
     	}
     	#topTron{
     		height:35%;
@@ -40,6 +40,7 @@
     		text-align: center;
     		position: absolute;
     		bottom:0;
+    		margin-bottom: 10px;
     	}
     	#botText{
     		width:100%;
@@ -47,6 +48,15 @@
     		position: absolute;
     		top:0;
     		overflow-y: auto;
+    	}
+    	.gamebtn{
+    		color:navy;
+    		background-color:rgba(0,0,0,0);
+    		text-shadow: 1px 1px #ff0000;
+    		border:solid;border-radius:2px;
+    		border-width: 1.5px;
+    		margin-bottom:20px;
+    		padding:6px;
     	}
     </style>
   </head>
@@ -60,9 +70,12 @@
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
 			<div id="botText">
-				<h1>
-					Soon to be a game. Here is some sample TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT 
-				</h1>
+				<div id="titleScreen">
+					<h2>
+						<button class="gamebtn">New Game</button><br>
+						<button class="gamebtn">Instructions</button>
+					</h2>
+				</div>
 			</div>
 		</div>
 		<!-- Bootstrap core JavaScript-->
