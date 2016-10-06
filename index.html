@@ -26,7 +26,7 @@
     		margin-bottom: 0;
     		text-align: center;
     		overflow-y: auto;
-    		text-shadow: 1px 1px #ff0000;
+
     	}
     	#topTron{
     		height:35%;
@@ -60,8 +60,11 @@
     		text-shadow: 1px 1px #ff0000;
     		border:solid;border-radius:2px;
     		border-width: 1.5px;
-    		margin-bottom:20px;
+    		margin:8px;
     		padding:6px 12px;
+    	}
+    	#instr{
+    		text-shadow: none;    		
     	}
     </style>
   </head>
@@ -78,10 +81,13 @@
 		<div id="botTron" class="jumbotron halfscreen">
 			<div id="botText">
 				<div id="titleScreenBot">
-					<h3>
-						<button class="gamebtn">New Game</button><br>
-						<button class="gamebtn">Instructions</button>
+					<h3 style="margin-top:10px">
+						<button class="gamebtn" id="newgamebtn">New Game</button><br>
+						<button class="gamebtn" id="instrbtn">Instructions</button>
 					</h3>
+					<div id="instr" style="display:none">
+						Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>
+					</div>
 				</div>
 			</div>
 
@@ -128,11 +134,19 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<!-- My JS -->
 		<script>
+		//button css
 		$(".gamebtn").hover(function(){
 			$(this).css({"background-color":"rgba(0,0,128,.2)"})
 		},function(){
 			$(this).css({"background-color":"rgba(0,0,0,0)"})
 		})
+
+		//Instructions button click
+		$("#instrbtn").click(function(){
+			$('#instrbtn').fadeToggle(500,function(){
+				$("#instr").fadeToggle(500)
+			});
+		});
 
 			angular.module('myApp', []);
 
