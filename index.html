@@ -26,18 +26,18 @@
     		margin-bottom: 0;
     		text-align: center;
     		overflow-y: auto;
-
+        text-shadow: 1px 1px #ff0000;
     	}
     	#topTron{
     		height:35%;
     		background-color: navy;
     		color: white;
-
-
+        display:none;
     	}
     	#botTron{
     		height:65%;
     		color: navy;
+        display:none;
     	}
     	#topText{
     		width:100%;
@@ -45,7 +45,8 @@
     		position: absolute;
     		bottom:0;
     		margin-bottom: 5px;
-    		max-height: 100%
+    		max-height: 100%;
+        display:none;
     	}
     	#botText{
     		width:100%;
@@ -86,7 +87,9 @@
 						<button class="gamebtn" id="instrbtn">Instructions</button>
 					</h3>
 					<div id="instr" style="display:none">
-						Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>Hello World<br>
+						<div class="container">
+						With as little as 3 people, you can start enjoying this tutorial isnt complete
+						</div>
 					</div>
 				</div>
 			</div>
@@ -134,19 +137,32 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<!-- My JS -->
 		<script>
-		//button css
-		$(".gamebtn").hover(function(){
-			$(this).css({"background-color":"rgba(0,0,128,.2)"})
-		},function(){
-			$(this).css({"background-color":"rgba(0,0,0,0)"})
-		})
+    //cool intro
+      $(document).ready(function(){
+        $("#topTron").slideDown(function(){
+          $("#topText").fadeToggle(function(){
+            $("#botTron").fadeToggle()
+          })
+        })
+      })
 
-		//Instructions button click
-		$("#instrbtn").click(function(){
-			$('#instrbtn').fadeToggle(500,function(){
-				$("#instr").fadeToggle(500)
-			});
-		});
+  		//button css
+  		$(".gamebtn").hover(function(){
+  			$(this).css({"background-color":"rgba(0,0,128,.2)"})
+  		},function(){
+  			$(this).css({"background-color":"rgba(0,0,0,0)"})
+  		});
+
+  		//Instructions button click
+  		$("#instrbtn").click(function(){
+  			$('#instrbtn').fadeToggle(500,function(){
+  				$("#instr").fadeToggle(500)
+  			});
+  		});
+
+      $("#newgamebtn").click(function(){
+
+      })
 
 			angular.module('myApp', []);
 
