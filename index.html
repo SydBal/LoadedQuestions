@@ -138,6 +138,7 @@
 					<strong><em><span style="text-shadow: 2px 2px #ff0000;">L</span></em></strong>oaded <strong><em><span style="text-shadow: 2px 2px #ff0000;">Q</span></em></strong>uestions
 				</h1>
         <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
+        <h3 id="gamereadytitle" style="display:none;margin-top: 10px">Let's get started</h3>
 			</div>		
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
@@ -161,6 +162,7 @@
           </h4>
           <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
+        <img id="tracer" style="display:none" src="http://kurld.com/images/wallpapers/picture-funny/picture-funny-24.jpg">
 			</div>
 <!--
   	<div class="container" ng-controller="myController" hidden="true">
@@ -264,6 +266,16 @@
             $("#playersignup").fadeToggle(100)
             $("#helpbutton").fadeToggle(3000)
             $("#gamesetuptitle").slideDown()
+          })
+        })
+
+        $('#gamestartbtn').click(function(){
+          $("#gamesetuptitle").slideToggle(function(){
+            $("#gamereadytitle").slideToggle()
+          })
+          $('#playersignup').fadeToggle(function(){
+            //show something!
+            $("#tracer").fadeToggle()
           })
         })
 
