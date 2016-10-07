@@ -234,6 +234,8 @@
         })
       })
 
+
+
 			angular.module('myApp', []);
 
 			angular.module('myApp')
@@ -297,6 +299,13 @@
             };
           };
         };
+
+        //player creation input using enter key
+        $("#playersignupinput").keypress(function(event) {
+          if (event.which == 13) {
+            addPlayer();
+          }
+        });
 
 			});
 		</script>
