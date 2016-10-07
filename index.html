@@ -98,11 +98,13 @@
         color:navy;
         background-color:rgba(0,0,0,0);
         margin:18px 8px;
-        padding:3px 6px;
+        padding:5px 6px;
+        padding-bottom: 2px;
         border:solid;
         border-radius:2px;
         border-width: 1px;
         max-width: 50%
+
       }
       #playersignuplist{
         text-shadow: none;
@@ -116,12 +118,14 @@
         border-radius: 100%;
         background-color: rgba(0,220,0,1);
         margin-left:-16px;
+        padding:6px;
       }
       #removeplayerbtn{
         border-radius: 100%;
         margin:2px 6px;
         background-color: rgba(255,0,0,1);
-        margin-left: -16px;
+        margin-left: -12px;
+        padding:6px;
       }
     </style>
   </head>
@@ -150,9 +154,9 @@
         <div id="playersignup">
           <h4 style="margin-bottom:0;margin-top:15px;1">
           <ul ng-repeat="player in players" id="playersignuplist">
-              <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
+              <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
           </ul>
-          <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><strong>+</strong></button><br>
+          <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
           </h4>
           <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
