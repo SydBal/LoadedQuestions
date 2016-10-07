@@ -113,11 +113,13 @@
         word-wrap: break-word;
       }
       #addplayerbtn{
-        border-radius: 100%
+        border-radius: 100%;
+        background-color: rgba(0,255,0,.7);
       }
       #removeplayerbtn{
         border-radius: 100%;
         margin:2px 6px;
+        background-color: rgba(255,0,0,.7);
       }
     </style>
   </head>
@@ -150,7 +152,7 @@
           </ul>
           <input type="text" id="playersignupinput"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb">+</button><br>
           </h4>
-          <button class="gamebtn" style="margin:0"><h3 style="margin:0">Start</h3></button>
+          <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
 			</div>
 <!--
@@ -210,10 +212,17 @@
       })
 
   		//button css
+      //buggy
   		$(".gamebtn").hover(function(){
   			$(this).css({"background-color":"rgba(0,0,128,.2)"})
   		},function(){
-  			$(this).css({"background-color":"rgba(0,0,0,0)"})
+        if(this.id=="addplayerbtn"){
+          $(this).css({"background-color":"rgba(0,255,0,.7)"})
+        }else if(this.id=="removeplayerbtn"){
+          $(this).css({"background-color":"rgba(255,0,0,.7)"})
+        }else{
+          $(this).css({"background-color":"rgba(0,0,0,0)"})
+        }
   		});
 
       $("#newgamebtn").click(function(){
@@ -269,6 +278,11 @@
           if($('#playersignupinput').val() != ''){
             $scope.players.push({"name":$("#playersignupinput").val()})
             $("#playersignupinput").val('')
+            if($scope.players.length==3){
+              $('#gamestartbtn').fadeIn()
+            }
+
+
           };
         };
 
@@ -276,6 +290,10 @@
           for(var i = $scope.players.length - 1; i >= 0; i--) {
             if($scope.players[i].name == pname) {
               $scope.players.splice(i, 1);
+              if($scope.players.length==2){
+                $('#gamestartbtn').fadeOut()
+              }
+              break;
             };
           };
         };
