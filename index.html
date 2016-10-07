@@ -22,9 +22,9 @@
     <!--Custom CSS-->
     <style type="text/css">
       .shadow {
-        -webkit-box-shadow: 0px -1px 4px 0px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-        -moz-box-shadow:    0px -1px 4px 0px #ccc;  /* Firefox 3.5 - 3.6 */
-        box-shadow:         0px -1px 4px 0px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+        -webkit-box-shadow: 0px 2px 4px 0px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow:    0px 2px 4px 0px #ccc;  /* Firefox 3.5 - 3.6 */
+        box-shadow:         0px 2px 4px 0px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
       }
     	.halfscreen{
     		position:relative;
@@ -114,12 +114,14 @@
       }
       #addplayerbtn{
         border-radius: 100%;
-        background-color: rgba(0,255,0,.7);
+        background-color: rgba(0,220,0,1);
+        margin-left:-16px;
       }
       #removeplayerbtn{
         border-radius: 100%;
         margin:2px 6px;
-        background-color: rgba(255,0,0,.7);
+        background-color: rgba(255,0,0,1);
+        margin-left: -16px;
       }
     </style>
   </head>
@@ -137,7 +139,7 @@
 			<div id="botText">
 				<div id="titlescreenbot">
 					<h3 style="margin-top:10px">
-						<button class="gamebtn" id="newgamebtn">New Game</button>
+						<button class="gamebtn shadow" id="newgamebtn">New Game</button>
 					</h3>
 					<div id="instr" style="display:none;">
 						<div class="container">
@@ -148,9 +150,9 @@
         <div id="playersignup">
           <h4 style="margin-bottom:0;margin-top:15px;1">
           <ul ng-repeat="player in players" id="playersignuplist">
-              <li><!--{{$index + 1}}-->{{ player.name }} <button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
+              <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
           </ul>
-          <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb">+</button><br>
+          <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><strong>+</strong></button><br>
           </h4>
           <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
@@ -238,12 +240,14 @@
         //button css
         //buggy
         $(".gamebtn").hover(function(){
-          $(this).css({"background-color":"rgba(0,0,128,.2)"})
+          if(this.id!="addplayerbtn"&&this.id!="removeplayerbtn"){
+              $(this).css({"background-color":"rgba(0,0,128,.2)"})
+          }
         },function(){
           if(this.id=="addplayerbtn"){
-            $(this).css({"background-color":"rgba(0,255,0,.7)"})
+            //$(this).css({"background-color":"rgba(0,255,0,1)"})
           }else if(this.id=="removeplayerbtn"){
-            $(this).css({"background-color":"rgba(255,0,0,.7)"})
+            $(this).css({"background-color":"rgba(255,0,0,1)"})
           }else{
             $(this).css({"background-color":"rgba(0,0,0,0)"})
           }
