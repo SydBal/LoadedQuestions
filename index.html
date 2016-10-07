@@ -150,7 +150,7 @@
           <ul ng-repeat="player in players" id="playersignuplist">
               <li><!--{{$index + 1}}-->{{ player.name }} <button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><strong>&#8211;</strong></button></li>
           </ul>
-          <input type="text" id="playersignupinput"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb">+</button><br>
+          <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb">+</button><br>
           </h4>
           <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
@@ -200,42 +200,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<!-- My JS -->
 		<script>
-    //cool intro
-      $(document).ready(function(){
-        $("#topTron").slideDown(function(){
-          $("#topText").fadeToggle(function(){
-            $("#botTron").fadeToggle(function(){
-              $("#instr").fadeToggle(3000,"linear")              
-            })
-          })
-        })
-      })
-
-  		//button css
-      //buggy
-  		$(".gamebtn").hover(function(){
-  			$(this).css({"background-color":"rgba(0,0,128,.2)"})
-  		},function(){
-        if(this.id=="addplayerbtn"){
-          $(this).css({"background-color":"rgba(0,255,0,.7)"})
-        }else if(this.id=="removeplayerbtn"){
-          $(this).css({"background-color":"rgba(255,0,0,.7)"})
-        }else{
-          $(this).css({"background-color":"rgba(0,0,0,0)"})
-        }
-  		});
-
-      $("#newgamebtn").click(function(){
-        $("#newgamebtn").prop('disabled', true);
-        $("#titlescreenbot").fadeToggle(function(){
-          $("#playersignup").fadeToggle(100)
-          $("#helpbutton").fadeToggle(3000)
-          $("#gamesetuptitle").slideDown()
-        })
-      })
-
-
-
 			angular.module('myApp', []);
 
 			angular.module('myApp')
@@ -260,6 +224,40 @@
 
         $scope.players = [];
 			  
+        //cool intro
+        $(document).ready(function(){
+          $("#topTron").slideDown(function(){
+            $("#topText").fadeToggle(function(){
+              $("#botTron").fadeToggle(function(){
+                $("#instr").fadeToggle(3000,"linear")              
+              })
+            })
+          })
+        })
+
+        //button css
+        //buggy
+        $(".gamebtn").hover(function(){
+          $(this).css({"background-color":"rgba(0,0,128,.2)"})
+        },function(){
+          if(this.id=="addplayerbtn"){
+            $(this).css({"background-color":"rgba(0,255,0,.7)"})
+          }else if(this.id=="removeplayerbtn"){
+            $(this).css({"background-color":"rgba(255,0,0,.7)"})
+          }else{
+            $(this).css({"background-color":"rgba(0,0,0,0)"})
+          }
+        });
+
+        $("#newgamebtn").click(function(){
+          $("#newgamebtn").prop('disabled', true);
+          $("#titlescreenbot").fadeToggle(function(){
+            $("#playersignup").fadeToggle(100)
+            $("#helpbutton").fadeToggle(3000)
+            $("#gamesetuptitle").slideDown()
+          })
+        })
+
 			  var findItemById = function(items, id) {
 			    return _.find(items, function(item) {
 			      return item.id === id;
@@ -301,11 +299,11 @@
         };
 
         //player creation input using enter key
-        $("#playersignupinput").keypress(function(event) {
+        $scope.enternewplayer = function(event){
           if (event.which == 13) {
-            addPlayer();
+            $scope.addPlayer();
           }
-        });
+        }
 
 			});
 		</script>
