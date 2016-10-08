@@ -45,7 +45,7 @@
     	}
       #helpbutton{
         position: absolute;
-        left:0;
+        right:0;
         top:0;
         background-color: rgba(0,0,0,0);
         text-shadow: none;
@@ -165,16 +165,18 @@
               <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
           </ul>
           <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
+          <div id="playerreq" style="text-shadow: none;color: red;">*Requires >3 Players</div>
           </h4>
-          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
+          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
 
         <div id="playertablewrapper" style="display:none;margin-top: 18px">
           <div id="playertable">
+            <h4 style="text-shadow: none;"><div style="padding-bottom: 5px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
             <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px" class="shadow">
               <tr style="padding:0px;">
                 <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
-                <th><h3 style="margin-top:10px">Score</h3></th>
+                <th><h3 style="margin-top:10px">Points</h3></th>
               </tr>
               <tr ng-repeat="player in players" id="scoretable">
                 <td><h4>{{player.name}}</h4></td>
@@ -182,8 +184,8 @@
               </tr>
             </table>
           </div>
-          <h3>
-            <button class="gamebtn shadow" id="tablenext">Next -></button>
+          <h3 style="margin-top:10px">
+            <button class="gamebtn shadow" id="tablenext">Start<br>Round 1</button>
           </h3>
         </div>
       </body>
@@ -255,6 +257,8 @@
 			  $scope.cart = [];
 
         $scope.players = [];
+
+        $scope.winScore = 0;
 			  
         //cool intro
         $(document).ready(function(){
@@ -299,6 +303,7 @@
         })
 
         $scope.startgame =function(){
+          $scope.winScore = 2 * $scope.players.length
           $("#gamestartbtn").attr("disabled", true);
           $("#gamesetuptitle").slideToggle(function(){
             $("#gamereadytitle").slideToggle()
@@ -330,7 +335,9 @@
             $scope.players.push({"name":$("#playersignupinput").val(),"score":0})
             $("#playersignupinput").val('')
             if($scope.players.length==3){
-              $('#gamestartbtn').fadeIn()
+              $("#playerreq").fadeToggle(function(){
+                $('#gamestartbtn').fadeIn()
+              })
             };
           };
         };
@@ -340,7 +347,10 @@
             if($scope.players[i].name == pname) {
               $scope.players.splice(i, 1);
               if($scope.players.length==2){
-                $('#gamestartbtn').fadeOut()
+                $('#gamestartbtn').fadeOut(function(){
+                  $("#playerreq").fadeToggle()
+                })
+              
               }
               break;
             };
