@@ -144,6 +144,7 @@
 				</h1>
         <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
         <h3 id="gamereadytitle" style="display:none;margin-top: 10px">Let's get started</h3>
+        <h3 id="gamereadytitle" style="display:none;margin-top: 10px;display:none">Let's get started</h3>
 			</div>		
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
@@ -172,8 +173,8 @@
           <div id="playertable">
             <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px" class="shadow">
               <tr style="padding:0px;">
-                <th style="text-align:center;"><h3 >Player</h3></th>
-                <th><h3 style="margin-top: 10px">Score</h3></th>
+                <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
+                <th><h3 style="margin-top:10px">Score</h3></th>
               </tr>
               <tr ng-repeat="player in players" id="scoretable">
                 <td><h4>{{player.name}}</h4></td>
@@ -182,7 +183,7 @@
             </table>
           </div>
           <h3>
-            <button class="gamebtn shadow" id="newgamebtn">Next -></button>
+            <button class="gamebtn shadow" id="tablenext">Next -></button>
           </h3>
         </div>
       </body>
@@ -260,7 +261,7 @@
           $("#topTron").slideDown(function(){
             $("#topText").fadeToggle(function(){
               $("#botTron").fadeToggle(function(){
-                $("#instr").fadeToggle(3000,"linear")              
+                $("#instr").fadeToggle(2000,"linear")              
               })
             })
           })
@@ -289,6 +290,12 @@
             $("#helpbutton").fadeToggle(3000)
             $("#gamesetuptitle").slideDown()
           })
+        })
+
+        $("#tablenext").click(function(){
+          $("#tablenext").attr("disabled", true);
+          $("#playertablewrapper").fadeToggle()
+          $('#gamereadytitle').slideToggle()
         })
 
         $scope.startgame =function(){
