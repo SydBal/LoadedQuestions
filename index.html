@@ -163,7 +163,8 @@
 				</h1>
         <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
         <h3 id="gamereadytitle" style="display:none;margin-top: 10px">Let's get started</h3>
-        <h3 id="gameroundtitle" style="display:none;margin-top: 10px;display:none">Round {{round}}</h3>
+        <h3 id="gameroundtitle" style="display:none;margin-top: 10px;display:none">Round {{round}}: {{players[turn].name}}{{}}</h3>
+        <h3 id="roundquestiontitle" style="display:none;margin-top: 6px">Q: "{{questions[turn].value}}"</h3>
 			</div>		
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
@@ -209,13 +210,12 @@
         </div>
         <div id="questionaskwrap" style="display:none;text-shadow: none;">
           <h3>
-            <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question<strong>:</strong>
+            <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question.
           </h3>
-          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button><br>
+          <h4>
+          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button></h4>
         </div>
-        <div id="respondwrap" style="display:none">
-          {{questions[turn].value}}
-        </div>
+
       </body>
 <!--
   	<div class="container" ng-controller="myController" hidden="true">
@@ -299,7 +299,7 @@
           $("#topTron").slideDown(function(){
             $("#topText").fadeToggle(function(){
               $("#botTron").fadeToggle(function(){
-                $("#instr").fadeToggle(2000,"linear")              
+                $("#instr").fadeToggle(2000,"linear") 
               })
             })
           })
@@ -409,6 +409,7 @@
             console.log($scope.questions)
             $("#questionaskwrap").fadeToggle(function(){
               $("#respondwrap").fadeToggle()
+              $("#roundquestiontitle").slideToggle()
             });
           };
         };
@@ -419,7 +420,6 @@
             $scope.askQuestion();
           };
         };
-
 			});
 		</script>
   </body>
