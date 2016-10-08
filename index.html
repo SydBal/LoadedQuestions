@@ -303,7 +303,7 @@
         })
 
         $scope.startgame =function(){
-          $scope.winScore = 2 * $scope.players.length
+          $scope.winScore = 2 * ($scope.players.length-1)
           $("#gamestartbtn").attr("disabled", true);
           $("#gamesetuptitle").slideToggle(function(){
             $("#gamereadytitle").slideToggle()
