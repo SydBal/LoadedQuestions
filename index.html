@@ -403,7 +403,10 @@
 
         $scope.askQuestion = function(){
           if($('#askquestioninput').val() != ''){
+            $("#askquestioninput").attr("disabled", true);
+            $("#askquestionbtn").attr("disabled", true);
             $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
+            console.log($scope.questions)
             $("#questionaskwrap").fadeToggle(function(){
               $("#respondwrap").fadeToggle()
             });
