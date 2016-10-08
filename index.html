@@ -107,6 +107,18 @@
         max-width: 50%
 
       }
+      #askquestioninput {
+        color:navy;
+        background-color:rgba(0,0,0,0);
+        margin:18px 8px;
+        padding:5px 6px;
+        padding-bottom: 2px;
+        border:solid;
+        border-radius:2px;
+        border-width: 1px;
+        max-width: 50%
+
+      }
       #playersignuplist{
         text-shadow: none;
         list-style: none;
@@ -116,6 +128,13 @@
         word-wrap: break-word;
       }
       #addplayerbtn{
+        border-radius: 100%;
+        background-color: rgba(0,220,0,1);
+        margin-left:-16px;
+        padding:6px;
+        display:inline-flex;
+      }
+      #askquestionbtn{
         border-radius: 100%;
         background-color: rgba(0,220,0,1);
         margin-left:-16px;
@@ -192,7 +211,10 @@
           <h3>
             <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question<strong>:</strong>
           </h3>
-                    <input type="text" id="questionaskinput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button><br>
+          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button><br>
+        </div>
+        <div id="respondwrap" style="display:none">
+          {{questions[turn].value}}
         </div>
       </body>
 <!--
@@ -270,6 +292,8 @@
 			  
         $scope.turn = 0;
 
+        $scope.questions = [];
+
         //cool intro
         $(document).ready(function(){
           $("#topTron").slideDown(function(){
@@ -284,7 +308,7 @@
         //button css
         //buggy
         $(".gamebtn").hover(function(){
-          if(this.id!="addplayerbtn"&&this.id!="removeplayerbtn"){
+          if(this.id!="addplayerbtn"&&this.id!="removeplayerbtn"&&this.id!="askquestionbtn"){
             $(this).css({"background-color":"rgba(0,0,128,.2)"})
           }
         },function(){
@@ -293,7 +317,7 @@
           }else if(this.id=="removeplayerbtn"){
             $(this).css({"background-color":"rgba(255,0,0,1)"})
           }else{
-            $(this).css({"background-color":"rgba(0,0,0,0)"})
+            //$(this).css({"background-color":"rgba(0,0,0,0)"})
           }
         });
 
@@ -316,14 +340,15 @@
         })
 
         $scope.startgame =function(){
-          $scope.winScore = 2 * ($scope.players.length-1)
+          $scope.winScore = 2 * ($scope.players.length-1);
           $("#gamestartbtn").attr("disabled", true);
           $("#gamesetuptitle").slideToggle(function(){
-            $("#gamereadytitle").slideToggle()
+            $("#gamereadytitle").slideToggle();
           })
           $('#playersignup').fadeToggle(function(){
             //show something!
-            $("#playertablewrapper").fadeToggle()
+            $("#playertablewrapper").fadeToggle();
+            console.log($scope.players[0].score);
           })
         }
 
@@ -345,12 +370,12 @@
 			  
         $scope.addPlayer = function(){
           if($('#playersignupinput').val() != ''){
-            $scope.players.push({"name":$("#playersignupinput").val(),"score":0})
-            $("#playersignupinput").val('')
+            $scope.players.push({name:$("#playersignupinput").val(),"score":0})
+            $("#playersignupinput").val('');
             if($scope.players.length==3){
               $("#playerreq").fadeToggle(function(){
-                $('#gamestartbtn').fadeIn()
-              })
+                $('#gamestartbtn').fadeIn();
+              });
             };
           };
         };
@@ -361,10 +386,9 @@
               $scope.players.splice(i, 1);
               if($scope.players.length==2){
                 $('#gamestartbtn').fadeOut(function(){
-                  $("#playerreq").fadeToggle()
-                })
-              
-              }
+                  $("#playerreq").fadeToggle();
+                });
+              };
               break;
             };
           };
@@ -374,6 +398,22 @@
         $scope.enternewplayer = function(event){
           if (event.which == 13) {
             $scope.addPlayer();
+          };
+        };
+
+        $scope.askQuestion = function(){
+          if($('#askquestioninput').val() != ''){
+            $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
+            $("#questionaskwrap").fadeToggle(function(){
+              $("#respondwrap").fadeToggle()
+            });
+          };
+        };
+
+        //question creation input using enter key
+        $scope.enternewquestion = function(event){
+          if (event.which == 13) {
+            $scope.askQuestion();
           };
         };
 
