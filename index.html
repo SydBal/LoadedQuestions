@@ -144,7 +144,7 @@
 				</h1>
         <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
         <h3 id="gamereadytitle" style="display:none;margin-top: 10px">Let's get started</h3>
-        <h3 id="gamereadytitle" style="display:none;margin-top: 10px;display:none">Let's get started</h3>
+        <h3 id="gameroundtitle" style="display:none;margin-top: 10px;display:none">Round {{round}}</h3>
 			</div>		
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
@@ -172,7 +172,7 @@
 
         <div id="playertablewrapper" style="display:none;margin-top: 18px">
           <div id="playertable">
-            <h4 style="text-shadow: none;"><div style="padding-bottom: 5px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
+            <h4 style="text-shadow: none;"><div style="padding-bottom: 14px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
             <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px" class="shadow">
               <tr style="padding:0px;">
                 <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
@@ -187,6 +187,12 @@
           <h3 style="margin-top:10px">
             <button class="gamebtn shadow" id="tablenext">Start<br>Round 1</button>
           </h3>
+        </div>
+        <div id="questionaskwrap" style="display:none;text-shadow: none;">
+          <h3>
+            <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question<strong>:</strong>
+          </h3>
+                    <input type="text" id="questionaskinput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button><br>
         </div>
       </body>
 <!--
@@ -259,7 +265,11 @@
         $scope.players = [];
 
         $scope.winScore = 0;
+
+        $scope.round = 1;
 			  
+        $scope.turn = 0;
+
         //cool intro
         $(document).ready(function(){
           $("#topTron").slideDown(function(){
@@ -299,7 +309,10 @@
         $("#tablenext").click(function(){
           $("#tablenext").attr("disabled", true);
           $("#playertablewrapper").fadeToggle()
-          $('#gamereadytitle').slideToggle()
+          $('#gamereadytitle').slideToggle(function(){
+            $("#gameroundtitle").slideToggle()
+            $("#questionaskwrap").fadeToggle()
+          })
         })
 
         $scope.startgame =function(){
