@@ -165,7 +165,7 @@
           </ul>
           <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
           </h4>
-          <button class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
+          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
 			</div>
       <div id="playertable" style="display:none;">
@@ -264,7 +264,7 @@
         //buggy
         $(".gamebtn").hover(function(){
           if(this.id!="addplayerbtn"&&this.id!="removeplayerbtn"){
-              $(this).css({"background-color":"rgba(0,0,128,.2)"})
+            $(this).css({"background-color":"rgba(0,0,128,.2)"})
           }
         },function(){
           if(this.id=="addplayerbtn"){
@@ -277,7 +277,7 @@
         });
 
         $("#newgamebtn").click(function(){
-          $("#newgamebtn").prop('disabled', true);
+          $("#newgamebtn").attr("disabled", true);
           $("#titlescreenbot").fadeToggle(function(){
             $("#playersignup").fadeToggle(100)
             $("#helpbutton").fadeToggle(3000)
@@ -285,7 +285,8 @@
           })
         })
 
-        $('#gamestartbtn').click(function(){
+        $scope.startgame =function(){
+          $("#gamestartbtn").attr("disabled", true);
           $("#gamesetuptitle").slideToggle(function(){
             $("#gamereadytitle").slideToggle()
           })
@@ -293,7 +294,7 @@
             //show something!
             $("#playertable").fadeToggle()
           })
-        })
+        }
 
 			  var findItemById = function(items, id) {
 			    return _.find(items, function(item) {
