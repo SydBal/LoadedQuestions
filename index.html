@@ -33,6 +33,7 @@
     		text-align: center;
     		overflow-y: auto;
         text-shadow: 1px 1px #ff0000;
+        padding-top:20px;
     	}
     	#topTron{
     		height:35%;
@@ -128,6 +129,10 @@
         margin-left: -12px;
         padding:6px;
       }
+      th, td {
+        padding: 5px;
+      }
+      tr:nth-child(even){background-color: #f9f9f9}
     </style>
   </head>
   <body ng-controller="myController">
@@ -160,10 +165,21 @@
           </ul>
           <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
           </h4>
-          <button class="gamebtn" style="margin:0;display:none" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
+          <button class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Start</h3></button>
         </div>
-        <img id="tracer" style="display:none;max-height: 65%" src="http://kurld.com/images/wallpapers/picture-funny/picture-funny-24.jpg">
 			</div>
+      <div id="playertable" style="display:none;">
+        <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px" class="shadow">
+          <tr style="padding:0px;">
+            <th style="text-align:center;"><h3 style="margin-top: 10px">Player</h3></th>
+            <th><h3 style="margin-top: 10px">Score</h3></th>
+          </tr>
+          <tr ng-repeat="player in players" id="scoretable">
+            <td><h4>{{player.name}}</h4></td>
+            <td><h4>{{player.score}}</h4></td>
+          </tr>
+        </table>
+      </div>
 <!--
   	<div class="container" ng-controller="myController" hidden="true">
       <h1>Welcome to the GA Camping Store</h1>
@@ -275,7 +291,7 @@
           })
           $('#playersignup').fadeToggle(function(){
             //show something!
-            $("#tracer").fadeToggle()
+            $("#playertable").fadeToggle()
           })
         })
 
@@ -297,13 +313,11 @@
 			  
         $scope.addPlayer = function(){
           if($('#playersignupinput').val() != ''){
-            $scope.players.push({"name":$("#playersignupinput").val()})
+            $scope.players.push({"name":$("#playersignupinput").val(),"score":0})
             $("#playersignupinput").val('')
             if($scope.players.length==3){
               $('#gamestartbtn').fadeIn()
-            }
-
-
+            };
           };
         };
 
@@ -323,8 +337,8 @@
         $scope.enternewplayer = function(event){
           if (event.which == 13) {
             $scope.addPlayer();
-          }
-        }
+          };
+        };
 
 			});
 		</script>
