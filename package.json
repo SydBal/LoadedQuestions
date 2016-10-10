@@ -1,6 +1,6 @@
 {
   "name": "loadedquestions",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Guess what your friends are thinking!",
   "main": "server.js",
   "scripts": {
