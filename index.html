@@ -99,8 +99,7 @@
         color:navy;
         background-color:rgba(0,0,0,0);
         margin:18px 8px;
-        padding:5px 6px;
-        padding-bottom: 2px;
+        padding:2px;
         border:solid;
         border-radius:2px;
         border-width: 1px;
@@ -111,7 +110,7 @@
         color:navy;
         background-color:rgba(0,0,0,0);
         margin:18px 8px;
-        padding:5px 6px;
+        padding:2px;
         padding-bottom: 2px;
         border:solid;
         border-radius:2px;
@@ -148,6 +147,13 @@
         margin-left: -12px;
         padding:6px;
       }
+      #addanswerbtn{
+        border-radius: 100%;
+        background-color: rgba(0,220,0,1);
+        margin-left:-16px;
+        padding:6px;
+        display:inline-flex;
+      }
       th, td {
         padding: 5px;
       }
@@ -180,13 +186,14 @@
 					</div>
 				</div>
         <div id="playersignup">
-          <h4 style="margin-bottom:0;margin-top:15px;1">
+          <h3 style="margin-bottom:0;margin-top:15px;1">
           <ul ng-repeat="player in players" id="playersignuplist">
               <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
           </ul>
           <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
+          </h3>
           <div id="playerreq" style="text-shadow: none;color: red;">*Requires >3 Players</div>
-          </h4>
+
           <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
 
@@ -216,9 +223,10 @@
           <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button></h4>
         </div>
         <div id="questionrespondwrap" style="display:none;">
-          <h4 style="margin-top:20px">Enter your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
+          <h4 style="margin-top:20px;text-shadow: none;">Enter and lock in your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
           <div ng-repeat="player in players">
-          <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button></h2>
+          <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addanswer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h2>
+          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
       </body>
 <!--
@@ -352,7 +360,6 @@
           $('#playersignup').fadeToggle(function(){
             //show something!
             $("#playertablewrapper").fadeToggle();
-            console.log($scope.players[0].score);
           })
         }
 
@@ -410,7 +417,6 @@
             $("#askquestioninput").attr("disabled", true);
             $("#askquestionbtn").attr("disabled", true);
             $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
-            console.log($scope.questions)
             $("#questionaskwrap").fadeToggle(function(){
               $("#respondwrap").fadeToggle()
               $("#roundquestiontitle").slideToggle()
