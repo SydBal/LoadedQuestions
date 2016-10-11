@@ -53,6 +53,7 @@
         font-size:3em;
         margin:2px;
         cursor: default;
+        z-index: 102
       }
     	#botTron{
     		height:65%;
@@ -160,11 +161,37 @@
         padding: 5px;
       }
       tr:nth-child(even){background-color: #f9f9f9}
+      tr:nth-child(odd){background-color: #FFFFFF}
+      #playertabletoggle{
+        right:0;
+        top:0;
+        position:fixed;
+        z-index: 101;
+        overflow-x:auto;
+        max-width: 100%;
+        display:none;
+      }
     </style>
   </head>
   <body ng-controller="myController">
+    <!--
+    ScoreToggle
+    -->
+    <i id="helpbutton" class="material-icons" style="display:none;" ng-click="showHelpMenu()">help</i>
+    <div id="playertabletoggle" >
+      <h4 style="text-shadow: none;margin-top: 0">
+      <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
+        <tr style="padding:0px;">
+          <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
+          <th><h3 style="margin-top:10px">Points</h3></th>
+        </tr>
+        <tr ng-repeat="player in players" id="scoretable">
+          <td><h4>{{player.name}}</h4></td>
+          <td><h4>{{player.score}}</h4></td>
+        </tr>
+      </table>
+    </div>
 		<div id="topTron" class="jumbotron halfscreen shadow">
-    <i id="helpbutton" class="material-icons" style="display:none;">help</i>
 			<div id="topText">				
 				<h1>
 					<strong><em><span style="text-shadow: 2px 2px #ff0000;">L</span></em></strong>oaded <strong><em><span style="text-shadow: 2px 2px #ff0000;">Q</span></em></strong>uestions
@@ -243,46 +270,9 @@
           <div ng-repeat="player in players" ng-if="$index!=turn">
             <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer(this);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons ans-{{$index}}" style="font-size:18px">lock_open</i></button></h3>
           </div>
-          <button class="gamebtn"><h3 style="margin:0">Next</h3></button>
+          <button class="gamebtn shadow"><h3 style="margin:0">Next</h3></button>
         </div>
       </body>
-<!--
-  	<div class="container" ng-controller="myController" hidden="true">
-      <h1>Welcome to the GA Camping Store</h1>
-      <br/>
-      <h4>Search: <input type="text" ng-model="searchText"></h4> 
-      <br/>
-      <div class="row">
-        <table class="table col-md-9 col-md-offset-3">
-          <tr>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-          <tr ng-repeat="item in inventory | filter:searchText | orderBy:'category'">
-            <td>{{ item.category }}</td>
-            <td>{{ item.description }}</td>
-            <td ng-class="{ 'on-sale' : item.onSale }">{{ item.price | currency }}</td>
-            <td><input type="number" min="0" class="qty" ng-model="item.qty"></td>
-            <td>{{ item.qty * item.price | currency }}</td>
-            <td><button class="btn-primary" ng-click="addItem(item);">Add</button></td>
-          </tr>
-        </table>
-      </div>
-      <div class="row">
-        <h2>Your Cart:</h2>
-        <ul>
-          <li ng-repeat="item in cart | orderBy:'category'">{{ item.qty + ' x ' + item.description }}</li>
-        </ul>
-        </div>
-
-        <pre>Total Amount of items in cart goes here</pre>
-      </div>
-		</div>
-    -->
 
 		<!-- Bootstrap core JavaScript-->
 		<!-- jQuery library -->
@@ -295,23 +285,6 @@
 
 			angular.module('myApp')
 			.controller('myController', function ($scope) {
-			  
-			  $scope.inventory = [
-			    { id :  1, category : "water bottle", description : "small water bottle",   price :   2.99, qty : 1 },
-			    { id :  2, category : "water bottle", description : "large water bottle",   price :   2.99, qty : 1, onSale : true },
-			    { id :  3, category : "flashlight",   description : "small flashlight",     price :   6.99, qty : 1 },
-			    { id :  4, category : "flashlight",   description : "big flashlight",       price :  12.99, qty : 1 },
-			    { id :  5, category : "stove",        description : "small stove",          price :  29.99, qty : 1 },
-			    { id :  6, category : "stove",        description : "big stove",            price :  29.99, qty : 1 },
-			    { id :  7, category : "sleeping bag", description : "simple sleeping bag",  price :  49.99, qty : 1 },
-			    { id :  8, category : "sleeping bag", description : "deluxe sleeping bag",  price :  79.99, qty : 1 },
-			    { id :  9, category : "tent",         description : "1-person tent",        price : 119.99, qty : 1 },
-			    { id : 10, category : "tent",         description : "2-person tent",        price : 169.99, qty : 1 },
-			    { id : 11, category : "tent",         description : "3-person tent",        price : 249.99, qty : 1 },
-			    { id : 12, category : "tent",         description : "4-person tent",        price : 319.99, qty : 1 }
-			  ];
-			  
-			  $scope.cart = [];
 
         $scope.players = [];
 
@@ -449,6 +422,11 @@
         $scope.addAnswer = function(a){
           console.log(a)
         }
+
+        $scope.showHelpMenu = function(){
+          $("#playertabletoggle").slideToggle()
+        }
+        
 			});
 		</script>
   </body>
