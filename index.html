@@ -59,6 +59,8 @@
     		color: navy;
         display:none;
         background-color:white;
+        overflow-x: auto;
+        overflow-y: auto;
     	}
     	#topText{
     		width:100%;
@@ -175,6 +177,9 @@
 		</div>
 		<div id="botTron" class="jumbotron halfscreen">
 			<div id="botText">
+        <!--
+        TITLE SCREEN
+        -->
 				<div id="titlescreenbot">
 					<h3 style="margin-top:10px">
 						<button class="gamebtn shadow" id="newgamebtn">New Game</button>
@@ -185,10 +190,13 @@
 						</div>
 					</div>
 				</div>
+        <!--
+        SIGN UP
+        -->
         <div id="playersignup">
           <h3 style="margin-bottom:0;margin-top:15px;1">
           <ul ng-repeat="player in players" id="playersignuplist">
-              <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer(player.name);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
+              <li><!--{{$index + 1}}--><span style="padding:4px 20px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer($index);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
           </ul>
           <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow"><button id="addplayerbtn" ng-click="addPlayer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">add</i></button><br>
           </h3>
@@ -196,11 +204,13 @@
 
           <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
-
+        <!--
+        SCOREBOARD
+        -->
         <div id="playertablewrapper" style="display:none;margin-top: 18px">
-          <div id="playertable">
+          <div id="playertable" >
             <h4 style="text-shadow: none;"><div style="padding-bottom: 14px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
-            <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px" class="shadow">
+            <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
               <tr style="padding:0px;">
                 <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
                 <th><h3 style="margin-top:10px">Points</h3></th>
@@ -215,18 +225,25 @@
             <button class="gamebtn shadow" id="tablenext">Start<br>Round 1</button>
           </h3>
         </div>
+        <!--
+        ASK QUESTION
+        -->
         <div id="questionaskwrap" style="display:none;text-shadow: none;">
           <h3>
             <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question.
           </h3>
-          <h4>
-          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">enhanced_encryption</i></button></h4>
+          <h3>
+          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
         </div>
+        <!--
+        RESPOND
+        -->
         <div id="questionrespondwrap" style="display:none;">
           <h4 style="margin-top:20px;text-shadow: none;">Enter and lock in your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
           <div ng-repeat="player in players">
-          <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addanswer();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h2>
-          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
+            <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn-{{$index}}" ng-click="addAnswer(this);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+          </div>
+          <button class="gamebtn"><h3 style="margin:0">Next</h3></button>
         </div>
       </body>
 <!--
@@ -324,12 +341,12 @@
             $(this).css({"background-color":"rgba(0,0,128,.2)"})
           }
         },function(){
-          if(this.id=="addplayerbtn"){
+          if(this.id=="addplayerbtn"||this.id=="askquestionbtn"){
             //$(this).css({"background-color":"rgba(0,255,0,1)"})
           }else if(this.id=="removeplayerbtn"){
             $(this).css({"background-color":"rgba(255,0,0,1)"})
           }else{
-            //$(this).css({"background-color":"rgba(0,0,0,0)"})
+            $(this).css({"background-color":"rgba(0,0,0,0)"})
           }
         });
 
@@ -391,17 +408,13 @@
           };
         };
 
-        $scope.removePlayer = function(pname){
-          for(var i = $scope.players.length - 1; i >= 0; i--) {
-            if($scope.players[i].name == pname) {
-              $scope.players.splice(i, 1);
-              if($scope.players.length==2){
-                $('#gamestartbtn').fadeOut(function(){
-                  $("#playerreq").fadeToggle();
-                });
-              };
-              break;
-            };
+        $scope.removePlayer = function(i){
+          $scope.players[i]
+          $scope.players.splice(i, 1);
+          if($scope.players.length==2){
+            $('#gamestartbtn').fadeOut(function(){
+              $("#playerreq").fadeToggle();
+            });
           };
         };
 
@@ -431,6 +444,11 @@
             $scope.askQuestion();
           };
         };
+
+        //lock in for player responses
+        $scope.addAnswer = function(a){
+          console.log(a)
+        }
 			});
 		</script>
   </body>
