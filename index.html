@@ -259,8 +259,10 @@
           <h3>
             <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question.
           </h3>
-          <h3>
-          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion();" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+          <h3 style="margin-top: 10px">
+          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion($event);" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+          <div id="questionreq" style="text-shadow: none;color: red;display:none;">*valid questions end with ?</div>
+          <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;"><h3 style="margin:0;">Next</h3></button>
         </div>
         <!--
         RESPOND
@@ -268,7 +270,7 @@
         <div id="questionrespondwrap" style="display:none;">
           <h4 style="margin-top:20px;text-shadow: none;">Enter and lock in your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
           <div ng-repeat="player in players" ng-if="$index!=turn">
-            <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer(this);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons ans-{{$index}}" style="font-size:18px">lock_open</i></button></h3>
+            <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
           </div>
           <button class="gamebtn shadow"><h3 style="margin:0">Next</h3></button>
         </div>
@@ -327,13 +329,13 @@
           $("#newgamebtn").attr("disabled", true);
           $("#titlescreenbot").fadeToggle(function(){
             $("#playersignup").fadeToggle(100)
-            $("#helpbutton").fadeToggle(3000)
             $("#gamesetuptitle").slideDown()
           })
         })
 
         $("#tablenext").click(function(){
-          $("#tablenext").attr("disabled", true);
+          $("#tablenext").attr("disabled", true);     
+          $("#helpbutton").fadeToggle(3000)
           $("#playertablewrapper").fadeToggle()
           $('#gamereadytitle').slideToggle(function(){
             $("#gameroundtitle").slideToggle()
@@ -348,9 +350,10 @@
             $("#gamereadytitle").slideToggle();
           })
           $('#playersignup').fadeToggle(function(){
-            //show something!
+            //show score to win and score table
             $("#playertablewrapper").fadeToggle();
           })
+
         }
 
 			  var findItemById = function(items, id) {
@@ -398,29 +401,47 @@
           };
         };
 
-        $scope.askQuestion = function(){
+        $scope.askQuestion = function(event){
           if($('#askquestioninput').val() != ''){
-            $("#askquestioninput").attr("disabled", true);
-            $("#askquestionbtn").attr("disabled", true);
-            $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
-            $("#questionaskwrap").fadeToggle(function(){
-              $("#respondwrap").fadeToggle()
-              $("#roundquestiontitle").slideToggle()
-              $("#questionrespondwrap").fadeToggle()
-            });
+            if($('#askquestioninput').val().substr($('#askquestioninput').val().length-1)=="?"){
+              btn_clicked=event.currentTarget;
+              if(btn_clicked.locked==undefined||btn_clicked.locked==false){
+                btn_clicked.style.background = "red"
+                btn_clicked.locked = true;
+                $('#askquestionnext').prop("disabled",false)
+                $("#questionreq").fadeOut(function(){
+                  $('#askquestionnext').fadeToggle()
+                })
+                btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
+              }else{
+                btn_clicked.style.background = "rgba(0,220,0,1)"
+                btn_clicked.locked = false;
+                $('#askquestionnext').prop("disabled",true)
+                $('#askquestionnext').fadeToggle()
+                btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
+              };
+            }else{
+              $("#questionreq").fadeIn()
+            };
           };
         };
 
-        //question creation input using enter key
-        $scope.enternewquestion = function(event){
-          if (event.which == 13) {
-            $scope.askQuestion();
-          };
-        };
+        $scope.submitQuestion = function(){
+          $("#askquestioninput").attr("disabled", true);
+          $("#askquestionbtn").attr("disabled", true);
+          $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
+          $("#questionaskwrap").fadeToggle(function(){
+            $("#respondwrap").fadeToggle()
+            $("#roundquestiontitle").slideToggle()
+            $("#questionrespondwrap").fadeToggle()
+          });
+        }
 
         //lock in for player responses
-        $scope.addAnswer = function(a){
-          console.log(a)
+        $scope.addAnswer = function(event){
+          btn_clicked=event.currentTarget;
+          btn_clicked.style.color = "red"
+          //console.log(btn_clicked.style)
         }
 
         $scope.showHelpMenu = function(){
