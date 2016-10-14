@@ -270,7 +270,7 @@
         <div id="questionrespondwrap" style="display:none;">
           <h4 style="margin-top:20px;text-shadow: none;">Enter and lock in your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
           <div ng-repeat="player in players" ng-if="$index!=turn">
-            <h3 style="margin-top:10px"><input type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+            <h3 style="margin-top:10px"><input id="response_{{$index}}" type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
           </div>
           <button class="gamebtn shadow"><h3 style="margin:0">Next</h3></button>
         </div>
@@ -297,6 +297,8 @@
         $scope.turn = 0;
 
         $scope.questions = [];
+
+        $scope.answers = [];
 
         //cool intro
         $(document).ready(function(){
@@ -325,6 +327,7 @@
           }
         });
 
+        //Home screen button press
         $("#newgamebtn").click(function(){
           $("#newgamebtn").attr("disabled", true);
           $("#titlescreenbot").fadeToggle(function(){
@@ -333,45 +336,7 @@
           })
         })
 
-        $("#tablenext").click(function(){
-          $("#tablenext").attr("disabled", true);     
-          $("#helpbutton").fadeToggle(3000)
-          $("#playertablewrapper").fadeToggle()
-          $('#gamereadytitle').slideToggle(function(){
-            $("#gameroundtitle").slideToggle()
-            $("#questionaskwrap").fadeToggle()
-          })
-        })
-
-        $scope.startgame =function(){
-          $scope.winScore = 2 * ($scope.players.length-1);
-          $("#gamestartbtn").attr("disabled", true);
-          $("#gamesetuptitle").slideToggle(function(){
-            $("#gamereadytitle").slideToggle();
-          })
-          $('#playersignup').fadeToggle(function(){
-            //show score to win and score table
-            $("#playertablewrapper").fadeToggle();
-          })
-
-        }
-
-			  var findItemById = function(items, id) {
-			    return _.find(items, function(item) {
-			      return item.id === id;
-			    });
-			  };
-			  
-			  $scope.addItem = function(item) {
-			    var foundItem = findItemById($scope.cart, item.id);
-			    if (foundItem) {
-			      foundItem.qty += item.qty;
-			    }
-			    else {
-			      $scope.cart.push(angular.copy(item));
-			    }
-			  };
-			  
+        //Add a player to the player list
         $scope.addPlayer = function(){
           if($('#playersignupinput').val() != ''){
             $scope.players.push({name:$("#playersignupinput").val(),"score":0})
@@ -384,6 +349,7 @@
           };
         };
 
+        //Remove an already added player from the list
         $scope.removePlayer = function(i){
           $scope.players[i]
           $scope.players.splice(i, 1);
@@ -401,6 +367,36 @@
           };
         };
 
+        //Once all players are added, NEXT button press
+        $scope.startgame =function(){
+          $scope.winScore = 2 * ($scope.players.length-1);
+          $("#gamestartbtn").attr("disabled", true);
+          $("#gamesetuptitle").slideToggle(function(){
+            $("#gamereadytitle").slideToggle();
+          });
+          $('#playersignup').fadeToggle(function(){
+            //show score to win and score table
+            $("#playertablewrapper").fadeToggle();
+          });
+        };
+
+        //Table NEXT button press
+        $("#tablenext").click(function(){
+          $("#tablenext").attr("disabled", true);     
+          $("#helpbutton").fadeToggle(3000)
+          $("#playertablewrapper").fadeToggle()
+          $('#gamereadytitle').slideToggle(function(){
+            $("#gameroundtitle").slideToggle()
+            $("#questionaskwrap").fadeToggle()
+          })
+        })			  
+
+        //Help menu button press
+        $scope.showHelpMenu = function(){
+          $("#playertabletoggle").slideToggle()
+        }
+
+        //lock in question, or unlock
         $scope.askQuestion = function(event){
           if($('#askquestioninput').val() != ''){
             if($('#askquestioninput').val().substr($('#askquestioninput').val().length-1)=="?"){
@@ -426,6 +422,7 @@
           };
         };
 
+        //Once question is locked in NEXT button press
         $scope.submitQuestion = function(){
           $("#askquestioninput").attr("disabled", true);
           $("#askquestionbtn").attr("disabled", true);
@@ -444,9 +441,7 @@
           //console.log(btn_clicked.style)
         }
 
-        $scope.showHelpMenu = function(){
-          $("#playertabletoggle").slideToggle()
-        }
+
         
 			});
 		</script>
