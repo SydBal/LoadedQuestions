@@ -245,7 +245,8 @@
         -->
         <div id="playertablewrapper" style="display:none;margin-top: 18px">
           <div id="playertable" >
-            <h4 style="text-shadow: none;"><div style="padding-bottom: 14px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
+            <h4 style="text-shadow: none;">
+            <div style="padding-bottom: 14px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div>
             <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
               <tr style="padding:0px;">
                 <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
@@ -269,19 +270,32 @@
             <strong style="text-shadow:1px 1px red">{{players[turn].name}}</strong>,<br> ask a question.
           </h3>
           <h3 style="margin-top: 10px">
-          <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow"><button id="askquestionbtn" ng-click="askQuestion($event);" class="gamebtn rnd-gb shadow"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+            <input type="text" id="askquestioninput" ng-keydown="enternewquestion($event)" placeholder="?" class="shadow">
+            <button id="askquestionbtn" ng-click="askQuestion($event);" class="gamebtn rnd-gb shadow">
+              <i class="material-icons" style="font-size:18px">lock_open</i>
+            </button>
+          </h3>
           <div id="questionreq" style="text-shadow: none;color: red;display:none;">*valid questions end with ?</div>
-          <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;"><h3 style="margin:0;">Next</h3></button>
+          <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;">
+            <h3 style="margin:0;">Next</h3>
+          </button>
         </div>
         <!--
         RESPOND
         -->
         <div id="questionrespondwrap" style="display:none;">
           <h4 style="margin-top:20px;text-shadow: none;">Enter and lock in your response to <strong>{{players[turn].name}}</strong>'s question.</h4>
-          <div ng-repeat="player in players" ng-if="$index!=turn">
-            <h3 style="margin-top:10px"><input id="response_{{$index}}" type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow"><button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button"><i class="material-icons" style="font-size:18px">lock_open</i></button></h3>
+          <div class="responses">
+            <div ng-repeat="player in players" ng-if="$index!=turn" class="response">
+              <h3 style="margin-top:10px">
+                <input id="response_{{$index}}" type="text" placeholder="{{players[$index].name}}" style="border-radius: 2px; border-color: navy;max-width: 50%; border-width: 1px;padding:2px" class="shadow">
+                <button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button">
+                  <i class="material-icons" style="font-size:18px">lock_open</i>
+                </button>
+              </h3>
+            </div>
           </div>
-          <button class="gamebtn shadow"><h3 style="margin:0">Next</h3></button>
+          <button ng-click="submitAnswers()" class="gamebtn shadow"><h3 style="margin:0">Next</h3></button>
         </div>
       </body>
 
@@ -410,6 +424,7 @@
           if($('#askquestioninput').val() != ''){
             if($('#askquestioninput').val().substr($('#askquestioninput').val().length-1)=="?"){
               btn_clicked=event.currentTarget;
+              var questionInput = $(btn_clicked).closest('h3').find('input')
               if(btn_clicked.locked==undefined||btn_clicked.locked==false){
                 btn_clicked.style.background = "red"
                 btn_clicked.locked = true;
@@ -418,12 +433,14 @@
                   $('#askquestionnext').fadeToggle()
                 })
                 btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
+                questionInput.prop("disabled", true);
               }else{
                 btn_clicked.style.background = "rgba(0,220,0,1)"
                 btn_clicked.locked = false;
                 $('#askquestionnext').prop("disabled",true)
                 $('#askquestionnext').fadeToggle()
                 btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
+                questionInput.prop("disabled", false);
               };
             }else{
               $("#questionreq").fadeIn()
@@ -446,10 +463,35 @@
         //lock in for player responses
         $scope.addAnswer = function(event){
           btn_clicked=event.currentTarget;
-          btn_clicked.style.color = "red"
-          //console.log(btn_clicked.style)
-        }
+          var answerInput = $(btn_clicked).closest('h3').find('input');
+          if(answerInput.val()!=''){
+            if(btn_clicked.locked==undefined||btn_clicked.locked==false){
+              btn_clicked.style.background = "red"
+              btn_clicked.locked = true;
+              $('#askquestionnext').prop("disabled",false);
+              $("#questionreq").fadeOut(function(){
+                $('#askquestionnext').fadeToggle();
+              })
+              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
+              $(btn_clicked).toggleClass('locked');
+              answerInput.prop("disabled", true);
+              answerInput.attr('type', 'password'); 
+            }else{
+              btn_clicked.style.background = "rgba(0,220,0,1)"
+              btn_clicked.locked = false;
+              $('#askquestionnext').prop("disabled",true)
+              $('#askquestionnext').fadeToggle()
+              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
+              $(btn_clicked).toggleClass('locked');
+              answerInput.prop("disabled", false);
+              answerInput.attr('type', 'text');
+            };
+          };
+        };
 
+        $scope.submitAnswers = function(){
+          console.log('hi');
+        };
 
         
 			});
