@@ -490,7 +490,9 @@
         };
 
         $scope.submitAnswers = function(){
-          console.log('hi');
+          var answers = $('#questionrespondwrap').find('input')
+          //returns true if everyone has responded
+          console.log(answers.length==answers.filter(":disabled").length);
         };
 
         
