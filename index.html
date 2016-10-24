@@ -321,7 +321,7 @@
 
         $scope.questions = [];
 
-        $scope.answers = [];
+        $scope.answers = {};
 
         //cool intro
         $(document).ready(function(){
@@ -493,6 +493,10 @@
           var answers = $('#questionrespondwrap').find('input')
           //returns true if everyone has responded
           console.log(answers.length==answers.filter(":disabled").length);
+
+          //
+          $scope.answers[$scope.players[1].name] = "hello"
+          console.log($scope.answers)
         };
 
         
