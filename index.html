@@ -144,6 +144,13 @@
         padding:6px;
         display:inline-flex;
       }
+      #guessquestionbtn{
+        border-radius: 100%;
+        background-color: rgba(0,220,0,1);
+        margin-left:0px;
+        padding:6px;
+        display:inline-flex;
+      }
       #removeplayerbtn{
         border-radius: 100%;
         margin:2px 6px;
@@ -175,6 +182,7 @@
       #flex-input{
         display: flex;
       }
+
     </style>
   </head>
   <body ng-controller="myController">
@@ -300,10 +308,23 @@
         <!--
         GUESS
         -->
-        <div id="guesswrap" style="">
-          <h3>{{players[turn].name}}, guess who wrote each response.</h3>
+        <div id="guesswrap" style="display: none;">
+          <h3><strong>{{players[turn].name}}</strong><span style="text-shadow:none;">, guess who wrote each response.</span></h3>
           <div ng-repeat="answer in answers">
-              <h4>{{answer.name}}: {{answer.a}}</h4>
+            <blockquote>
+              <p style="margin-bottom:5px">"<span style="text-shadow: none;">{{answer.a}}"</span></p>
+              <footer>
+                <cite title="Source Title"></cite>
+                <select style="border:none;font-size:1.4em;color:navy;">
+                  <option ng-repeat="player in players" ng-if="$index!=turn">
+                    {{player.name}}
+                  </option>
+                </select>
+                <button id="guessquestionbtn" ng-click="guessQuestion($event);" class="gamebtn rnd-gb shadow">
+                  <i class="material-icons" style="font-size:18px">lock_open</i>
+                </button>
+              </footer>
+            </blockquote>
           </div>
         </div>
       </body>
@@ -510,9 +531,6 @@
           };
         };
 
-
-
-
         $scope.submitAnswers = function(){
           var answers = $('#questionrespondwrap').find('input')
           //for each answer input field, get the response
@@ -543,10 +561,14 @@
             answersUnshuffled[i] = {name:$(this).attr('placeholder'),a:$(this).val()}
           })
           $scope.answers = shuffleArray(answersUnshuffled)
-          $('#questionrespondwrap').fadeToggle();
+          $('#questionrespondwrap').fadeToggle(function(){
+            $('#guesswrap').fadeToggle()
+          });
         };
 
-        
+        $scope.guessQuestion = function(event){
+
+        }
 			});
 		</script>
   </body>
