@@ -295,7 +295,16 @@
               </h3>
             </div>
           </div>
-          <button id="responseNext" ng-click="submitAnswers()" class="gamebtn shadow" style="display:none"><h3 style="margin:0;">Next</h3></button>
+          <button id="responseNext" ng-click="submitAnswers()" class="gamebtn shadow" style="display:none" disabled=""><h3 style="margin:0;">Next</h3></button>
+        </div>
+        <!--
+        GUESS
+        -->
+        <div id="guesswrap" style="">
+          <h3>{{players[turn].name}}, guess who wrote each response.</h3>
+          <div ng-repeat="answer in answers">
+              <h4>{{answer.name}}: {{answer.a}}</h4>
+          </div>
         </div>
       </body>
 
@@ -321,7 +330,7 @@
 
         $scope.questions = [];
 
-        $scope.answers = {};
+        $scope.answers = [];
 
         //cool intro
         $(document).ready(function(){
@@ -468,6 +477,7 @@
             //returns true if everyone has responded
             if(answers.length==answers.filter(":disabled").length){
                 $('#responseNext').fadeToggle()
+                $('#responseNext').prop('disabled', function(i, v) { return !v; });
             };
           }
 
@@ -505,14 +515,35 @@
 
         $scope.submitAnswers = function(){
           var answers = $('#questionrespondwrap').find('input')
-
           //for each answer input field, get the response
+          /*
+            [
+             {
+              name: (player), 
+              a   : (answer)
+             },
+             {...},
+             ...
+            ]
+          */
+          //randomize the order to make guessing more difficult (make rendering angular easier!)
+          //http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+          function shuffleArray(array) {
+              for (var i = array.length - 1; i > 0; i--) {
+                  var j = Math.floor(Math.random() * (i + 1));
+                  var temp = array[i];
+                  array[i] = array[j];
+                  array[j] = temp;
+              }
+              return array;
+          }
+
+          var answersUnshuffled = []
           $('.response input').each(function(i,value){
-            $scope.answers[$(this).attr('placeholder')] = $(this).val()
+            answersUnshuffled[i] = {name:$(this).attr('placeholder'),a:$(this).val()}
           })
-
-          $('#responses').fadeToggle();
-
+          $scope.answers = shuffleArray(answersUnshuffled)
+          $('#questionrespondwrap').fadeToggle();
         };
 
         
