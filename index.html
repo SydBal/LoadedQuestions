@@ -312,10 +312,10 @@
           <h3><strong>{{players[turn].name}}</strong><span style="text-shadow:none;">, guess who wrote each response.</span></h3>
           <div ng-repeat="answer in answers">
             <blockquote>
-              <p style="margin-bottom:5px">"<span style="text-shadow: none;">{{answer.a}}"</span></p>
+              <p style="margin-bottom:5px">"<span style="text-shadow: none;">{{answer.a}}</span>"</p>
               <footer>
-                <cite title="Source Title"></cite>
                 <select style="border:none;font-size:1.4em;color:navy;">
+                  <option value="" disabled selected style="display: none;">Player</option>
                   <option ng-repeat="player in players" ng-if="$index!=turn">
                     {{player.name}}
                   </option>
