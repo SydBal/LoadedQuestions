@@ -146,7 +146,7 @@
       }
       #guessquestionbtn{
         border-radius: 100%;
-        background-color: rgba(0,220,0,1);
+        background-color: yellow;
         margin-left:0px;
         padding:6px;
         display:inline-flex;
@@ -182,7 +182,13 @@
       #flex-input{
         display: flex;
       }
-
+      .guesses{
+        margin-bottom: 5px;
+        border-top:1px solid #3A5FCD;
+      }
+      #guesswrap .guesses:first-child{
+        border-top: none;
+      }
     </style>
   </head>
   <body ng-controller="myController">
@@ -246,7 +252,7 @@
           </h3>
           <div id="playerreq" style="text-shadow: none;color: red;">*Requires >3 Players</div>
 
-          <button ng-click="startgame()" class="gamebtn" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
+          <button ng-click="startgame()" class="gamebtn shadow" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
         <!--
         SCOREBOARD
@@ -309,22 +315,18 @@
         GUESS
         -->
         <div id="guesswrap" style="display: none;">
-          <h3><strong>{{players[turn].name}}</strong><span style="text-shadow:none;">, guess who wrote each response.</span></h3>
-          <div ng-repeat="answer in answers">
-            <blockquote>
-              <p style="margin-bottom:5px">"<span style="text-shadow: none;">{{answer.a}}</span>"</p>
-              <footer>
-                <select style="border:none;font-size:1.4em;color:navy;">
-                  <option value="" disabled selected style="display: none;">Player</option>
-                  <option ng-repeat="player in players" ng-if="$index!=turn">
-                    {{player.name}}
-                  </option>
-                </select>
-                <button id="guessquestionbtn" ng-click="guessQuestion($event);" class="gamebtn rnd-gb shadow">
-                  <i class="material-icons" style="font-size:18px">lock_open</i>
-                </button>
-              </footer>
-            </blockquote>
+          <h3 style="margin-bottom: 12px"><strong>{{players[turn].name}}</strong><span style="text-shadow:none;">, guess who wrote each response.</span></h3>
+          <div class="guesses" ng-repeat="answer in answers">
+            <p style="margin-bottom:5px;margin-top:15px">"<span style="text-shadow: none;">{{answer.a}}</span>"</p>
+            <select style="border:none;font-size:1.4em;color:navy;">
+              <option value="" disabled selected style="display: none;">Player</option>
+              <option ng-repeat="player in players" ng-if="$index!=turn">
+                {{player.name}}
+              </option>
+            </select>
+            <button id="guessquestionbtn" ng-click="guessQuestion($event);" class="gamebtn rnd-gb shadow">
+              <i class="material-icons" style="font-size:18px">lock_open</i>
+            </button>
           </div>
         </div>
       </body>
