@@ -21,6 +21,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
     <!--Custom CSS-->
     <style type="text/css">
+      body{
+        word-wrap: break-word;
+      }
       .shadow {
         -webkit-box-shadow: 0px 2px 4px 0px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
         -moz-box-shadow:    0px 2px 4px 0px #ccc;  /* Firefox 3.5 - 3.6 */
@@ -185,6 +188,10 @@
       .guesses{
         margin-bottom: 5px;
         border-top:1px solid #3A5FCD;
+        max-width: 50%;
+        margin-left:auto;
+        margin-right: auto;
+        min-width: 300px;
       }
       #guesswrap .guesses:first-child{
         border-top: none;
@@ -318,13 +325,13 @@
           <h3 style="margin-bottom: 12px"><strong>{{players[turn].name}}</strong><span style="text-shadow:none;">, guess who wrote each response.</span></h3>
           <div class="guesses" ng-repeat="answer in answers">
             <p style="margin-bottom:5px;margin-top:15px">"<span style="text-shadow: none;">{{answer.a}}</span>"</p>
-            <select style="border:none;font-size:1.4em;color:navy;">
+            <select style="border:1px solid navy;font-size:1.4em;color:navy;border-radius:2px;padding:2px;max-width: 50%" class="shadow">
               <option value="" disabled selected style="display: none;">Player</option>
               <option ng-repeat="player in players" ng-if="$index!=turn">
                 {{player.name}}
               </option>
             </select>
-            <button id="guessquestionbtn" ng-click="guessQuestion($event);" class="gamebtn rnd-gb shadow">
+            <button id="guessquestionbtn" ng-click="guessQuestion($event,answer.a);" class="gamebtn rnd-gb shadow">
               <i class="material-icons" style="font-size:18px">lock_open</i>
             </button>
           </div>
@@ -568,9 +575,50 @@
           });
         };
 
-        $scope.guessQuestion = function(event){
+        $scope.guessQuestion = function(event,answer){
+          btn_clicked=event.currentTarget;
+          var guessfield = $(btn_clicked).closest('.guesses').find('select')
+          if(guessfield.val()!=null){
+            $(guessfield).prop("disabled", true);
+            $(guessfield).css({"background-color":"lightgrey"});
+            $(btn_clicked).prop("disabled", true);
+            btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
+            var guess = $(btn_clicked).closest('.guesses').find('select').val().trim();
+            var actual = '';
+            for (var i = $scope.answers.length - 1; i >= 0; i--) {
+              if($scope.answers[i].a==answer){
+                if($scope.answers[i].name==guess){
+                  btn_clicked.style.background = "rgba(0,220,0,1)"
+                    }else{
+                  btn_clicked.style.background = "red"
+                }
+              }
+            }
+          }
 
-        }
+          /*if(answerInput.val()!=''){
+            if(btn_clicked.locked==undefined||btn_clicked.locked==false){
+              btn_clicked.style.background = "red"
+              btn_clicked.locked = true;
+              $('#askquestionnext').prop("disabled",false);
+              $("#questionreq").fadeOut(function(){
+                $('#askquestionnext').fadeToggle();
+              })
+              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
+              $(btn_clicked).toggleClass('locked');
+              answerInput.prop("disabled", true);
+              answerInput.attr('type', 'password'); 
+            }else{
+              btn_clicked.style.background = "rgba(0,220,0,1)"
+              btn_clicked.locked = false;
+              $('#askquestionnext').prop("disabled",true)
+              $('#askquestionnext').fadeToggle()
+              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
+              $(btn_clicked).toggleClass('locked');
+              answerInput.prop("disabled", false);
+              answerInput.attr('type', 'text');
+            };*/
+        };
 			});
 		</script>
   </body>
