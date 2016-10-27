@@ -366,7 +366,7 @@
 
         $scope.round = 1;
 			  
-        $scope.turn = 0;
+        $scope.turn = -1;
 
         $scope.questions = [];
 
@@ -448,11 +448,15 @@
 
         //Table NEXT button press
         $("#tablenext").click(function(){
+          $scope.turn++;
+          $scope.$apply()
           $("#tablenext").attr("disabled", true);     
           $("#helpbutton").fadeToggle(3000)
           $("#playertablewrapper").fadeToggle(function(){
-            $("#gameroundtitle").slideToggle()
             $("#questionaskwrap").fadeToggle()
+            if(($('#gameroundtitle').css('display') == 'none')){
+              $("#gameroundtitle").slideToggle()
+            }
           })
           if(!($('#gamereadytitle').css('display') == 'none')){
             $('#gamereadytitle').slideToggle()
@@ -608,6 +612,7 @@
                 if($scope.answers[i].name==guess){
                   //add point
                   btn_clicked.style.background = "rgba(0,220,0,1)"
+                  $scope.players[$scope.turn].score++;
                 }else{
                   //fail
                   btn_clicked.style.background = "red"
@@ -624,7 +629,6 @@
           });
           $('#roundquestiontitle').slideToggle()
           $('#guesswrap').fadeToggle(function(){
-            $scope.turn++;1
             $('#playertablewrapper').fadeToggle()
             $('#tablenext').prop('disabled', false);
           })
