@@ -81,6 +81,8 @@
     		position: absolute;
     		top:0;
     		overflow-y: auto;
+        padding-bottom: 10px;
+        height: 100%;
     	}
     	.gamebtn{
     		color:navy;
@@ -259,7 +261,7 @@
           </h3>
           <div id="playerreq" style="text-shadow: none;color: red;">*Requires >3 Players</div>
 
-          <button ng-click="startgame()" class="gamebtn shadow" style="margin:0;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
+          <button ng-click="startgame()" class="gamebtn shadow" style="margin:2px;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
         <!--
         SCOREBOARD
@@ -297,7 +299,7 @@
             </button>
           </h3>
           <div id="questionreq" style="text-shadow: none;color: red;display:none;">*valid questions end with ?</div>
-          <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;">
+          <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;margin:2px">
             <h3 style="margin:0;">Next</h3>
           </button>
         </div>
@@ -335,8 +337,14 @@
               <i class="material-icons" style="font-size:18px">lock_open</i>
             </button>
           </div>
+          <button id="guessNext" ng-click="endTurn()" class="gamebtn shadow" style="display:none;margin:10px" disabled><h3 style="margin:0;">Next</h3></button>
         </div>
       </body>
+
+
+
+
+
 
 		<!-- Bootstrap core JavaScript-->
 		<!-- jQuery library -->
@@ -400,8 +408,17 @@
 
         //Add a player to the player list
         $scope.addPlayer = function(){
-          if($('#playersignupinput').val() != ''){
-            $scope.players.push({name:$("#playersignupinput").val(),"score":0})
+          var newPlayer = $('#playersignupinput').val().trim();
+          var isNewName = true;
+          for (var i = $scope.players.length - 1; i >= 0; i--) {
+            if($scope.players[i].name == newPlayer){
+              isNewName = false;
+            };
+          };
+          console.log($scope.players.indexOf(newPlayer))
+          console.log($scope.players)
+          if(newPlayer != '' && isNewName){
+            $scope.players.push({name:newPlayer,"score":0})
             $("#playersignupinput").val('');
             if($scope.players.length==3){
               $("#playerreq").fadeToggle(function(){
@@ -576,6 +593,18 @@
         };
 
         $scope.guessQuestion = function(event,answer){
+          //check if all answers are locked in (before and after changing the lock)
+          var areGuessesSubmitted = function(){
+            var guesses = $('#guesswrap').find('select');
+            //returns true if everyone has responded
+            if(guesses.length==guesses.filter(":disabled").length){
+                $('#guessNext').fadeToggle()
+                $('#guessNext').prop('disabled', function(i, v) { 
+                  return !v; 
+                });
+            };
+          }
+
           btn_clicked=event.currentTarget;
           var guessfield = $(btn_clicked).closest('.guesses').find('select')
           if(guessfield.val()!=null){
@@ -588,37 +617,26 @@
             for (var i = $scope.answers.length - 1; i >= 0; i--) {
               if($scope.answers[i].a==answer){
                 if($scope.answers[i].name==guess){
+                  //add point
                   btn_clicked.style.background = "rgba(0,220,0,1)"
-                    }else{
+                }else{
+                  //fail
                   btn_clicked.style.background = "red"
                 }
+                areGuessesSubmitted();
               }
             }
           }
-
-          /*if(answerInput.val()!=''){
-            if(btn_clicked.locked==undefined||btn_clicked.locked==false){
-              btn_clicked.style.background = "red"
-              btn_clicked.locked = true;
-              $('#askquestionnext').prop("disabled",false);
-              $("#questionreq").fadeOut(function(){
-                $('#askquestionnext').fadeToggle();
-              })
-              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock</i>';
-              $(btn_clicked).toggleClass('locked');
-              answerInput.prop("disabled", true);
-              answerInput.attr('type', 'password'); 
-            }else{
-              btn_clicked.style.background = "rgba(0,220,0,1)"
-              btn_clicked.locked = false;
-              $('#askquestionnext').prop("disabled",true)
-              $('#askquestionnext').fadeToggle()
-              btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
-              $(btn_clicked).toggleClass('locked');
-              answerInput.prop("disabled", false);
-              answerInput.attr('type', 'text');
-            };*/
         };
+
+        $scope.endTurn = function(){
+          $('#guessNext').prop('disabled', function(i, v) { 
+            return !v; 
+          });
+          $('#guesswrap').fadeToggle(function(){
+            $('#playertablewrapper').fadeToggle()
+          })
+        }
 			});
 		</script>
   </body>
