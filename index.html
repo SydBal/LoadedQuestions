@@ -188,7 +188,7 @@
         display: flex;
       }
       .guesses{
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         border-top:1px solid #3A5FCD;
         max-width: 50%;
         margin-left:auto;
@@ -281,7 +281,9 @@
               </tr>
             </table>
             <h3 style="margin-top:10px">
-            <button class="gamebtn shadow" id="tablenext">Start<br>Round 1</button>
+            <!--<button class="gamebtn shadow" id="tablenext">Start<br>Round {{round}}<br>
+            Turn {{turn+1}}</button>-->
+            <button class="gamebtn shadow" id="tablenext">Next</button>
             </h3>
           </div>
         </div>
@@ -381,22 +383,6 @@
           })
         })
 
-        //button css
-        //buggy
-        $(".gamebtn").hover(function(){
-          if(this.id!="addplayerbtn"&&this.id!="removeplayerbtn"&&this.id!="askquestionbtn"){
-            $(this).css({"background-color":"rgba(0,0,128,.2)"})
-          }
-        },function(){
-          if(this.id=="addplayerbtn"||this.id=="askquestionbtn"){
-            //$(this).css({"background-color":"rgba(0,255,0,1)"})
-          }else if(this.id=="removeplayerbtn"){
-            $(this).css({"background-color":"rgba(255,0,0,1)"})
-          }else{
-            $(this).css({"background-color":"rgba(0,0,0,0)"})
-          }
-        });
-
         //Home screen button press
         $("#newgamebtn").click(function(){
           $("#newgamebtn").attr("disabled", true);
@@ -464,11 +450,13 @@
         $("#tablenext").click(function(){
           $("#tablenext").attr("disabled", true);     
           $("#helpbutton").fadeToggle(3000)
-          $("#playertablewrapper").fadeToggle()
-          $('#gamereadytitle').slideToggle(function(){
+          $("#playertablewrapper").fadeToggle(function(){
             $("#gameroundtitle").slideToggle()
             $("#questionaskwrap").fadeToggle()
           })
+          if(!($('#gamereadytitle').css('display') == 'none')){
+            $('#gamereadytitle').slideToggle()
+          }
         })			  
 
         //Help menu button press
@@ -574,13 +562,13 @@
           //randomize the order to make guessing more difficult (make rendering angular easier!)
           //http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
           function shuffleArray(array) {
-              for (var i = array.length - 1; i > 0; i--) {
-                  var j = Math.floor(Math.random() * (i + 1));
-                  var temp = array[i];
-                  array[i] = array[j];
-                  array[j] = temp;
-              }
-              return array;
+            for (var i = array.length - 1; i > 0; i--) {
+              var j = Math.floor(Math.random() * (i + 1));
+              var temp = array[i];
+              array[i] = array[j];
+              array[j] = temp;
+            }
+            return array;
           }
 
           var answersUnshuffled = []
@@ -634,8 +622,11 @@
           $('#guessNext').prop('disabled', function(i, v) { 
             return !v; 
           });
+          $('#roundquestiontitle').slideToggle()
           $('#guesswrap').fadeToggle(function(){
+            $scope.turn++;1
             $('#playertablewrapper').fadeToggle()
+            $('#tablenext').prop('disabled', false);
           })
         }
 			});
