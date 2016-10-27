@@ -410,13 +410,14 @@
         $scope.addPlayer = function(){
           var newPlayer = $('#playersignupinput').val().trim();
           var isNewName = true;
+          //disallow duplicate names
+          //TODO: show a warning to user
           for (var i = $scope.players.length - 1; i >= 0; i--) {
             if($scope.players[i].name == newPlayer){
               isNewName = false;
             };
           };
-          console.log($scope.players.indexOf(newPlayer))
-          console.log($scope.players)
+          //add to player list and prepare for the next user
           if(newPlayer != '' && isNewName){
             $scope.players.push({name:newPlayer,"score":0})
             $("#playersignupinput").val('');
