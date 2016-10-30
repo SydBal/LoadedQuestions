@@ -100,6 +100,8 @@ angular.module('myApp').controller('myController', function ($scope) {
     };
     $("#tablenext").attr("disabled", true);     
     $("#helpbutton").fadeIn(3000);
+    $('#askquestioninput').val('');
+    
     $("#playertablewrapper").fadeToggle(function(){
       $("#questionaskwrap").fadeToggle();
       if(($('#gameroundtitle').css('display') == 'none')){
@@ -109,7 +111,7 @@ angular.module('myApp').controller('myController', function ($scope) {
     if(!($('#gamereadytitle').css('display') == 'none')){
       $('#gamereadytitle').slideToggle();
     };
-  })			;  
+  });  
 
   //Help menu button press
   $scope.showHelpMenu = function(){
