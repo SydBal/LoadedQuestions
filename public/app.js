@@ -89,10 +89,10 @@ angular.module('myApp').controller('myController', function ($scope) {
 
   //Table NEXT button press
   $("#tablenext").click(function(){
-    if($scope.turn-1==$scope.players.length){
+    if($scope.turn==$scope.players.length-1){
       //TODO: check win at round end
       $scope.round++;
-      $scope.turn==0;
+      $scope.turn=0;
       $scope.$apply();
     }else{
       $scope.turn++;
@@ -172,7 +172,6 @@ angular.module('myApp').controller('myController', function ($scope) {
     answers.attr('type', 'text'); 
     //set all locks to unlock
     var lockbtn = $('#questionrespondwrap').find('.lock-button');
-    console.log(lockbtn)
     lockbtn.css({'background-color':"rgba(0,220,0,1)"})
     lockbtn.locked = false;
     lockbtn.html('<i class="material-icons" style="font-size:18px">lock_open</i>')
@@ -203,7 +202,7 @@ angular.module('myApp').controller('myController', function ($scope) {
     btn_clicked=event.currentTarget;
     var answerInput = $(btn_clicked).closest('h3').find('input');
     if(answerInput.val()!=''){
-      if(btn_clicked.locked==undefined||btn_clicked.locked==false){
+      if(btn_clicked.style.background != "red"){
         btn_clicked.style.background = "red"
         btn_clicked.locked = true;
         $('#askquestionnext').prop("disabled",false);
@@ -305,13 +304,12 @@ angular.module('myApp').controller('myController', function ($scope) {
   };
 
   $scope.endTurn = function(){
-    $('#guessNext').prop('disabled', function(i, v) { 
-      return !v; 
-    });
+    $('#guessNext').prop('disabled',true);
     $('#roundquestiontitle').slideToggle();
     $('#guesswrap').fadeToggle(function(){
       $('#playertablewrapper').fadeToggle();
       $('#tablenext').prop('disabled', false);
+      $('#guessNext').hide()
     });
   };
 });
