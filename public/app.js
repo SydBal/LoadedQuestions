@@ -110,7 +110,7 @@ angular.module('myApp').controller('myController', function ($scope) {
     lockbtn.style.background = "rgba(0,220,0,1)";
     lockbtn.locked = false;
     lockbtn.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
-    lockbtn.disabled = false
+    lockbtn.disabled = false;
 
     $("#playertablewrapper").fadeToggle(function(){
       $("#questionaskwrap").fadeToggle();
@@ -159,13 +159,27 @@ angular.module('myApp').controller('myController', function ($scope) {
 
   //Once question is locked in NEXT button press
   $scope.submitQuestion = function(){
+    $("askquestionnext").attr("disabled", true);
     $("#askquestioninput").attr("disabled", true);
     $("#askquestionbtn").attr("disabled", true);
     $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
 
     //prepare next screen
+    //reset all inputs
+    var answers = $('#questionrespondwrap').find('input');
+    answers.val('')
+    answers.prop('disabled',false)
+    answers.attr('type', 'text'); 
+    //set all locks to unlock
+    var lockbtn = $('#questionrespondwrap').find('.lock-button');
+    console.log(lockbtn)
+    lockbtn.css({'background-color':"rgba(0,220,0,1)"})
+    lockbtn.locked = false;
+    lockbtn.html('<i class="material-icons" style="font-size:18px">lock_open</i>')
+    lockbtn.prop('disabled',false)
+    //hide next button
+    $('#responseNext').hide();
 
-    
     $("#questionaskwrap").fadeToggle(function(){
       $("#respondwrap").fadeToggle();
       $("#roundquestiontitle").slideToggle();
@@ -180,7 +194,7 @@ angular.module('myApp').controller('myController', function ($scope) {
       var answers = $('#questionrespondwrap').find('input');
       //returns true if everyone has responded
       if(answers.length==answers.filter(":disabled").length){
-          $('#responseNext').fadeIn()
+          $('#responseNext').fadeToggle()
           $('#responseNext').prop('disabled', function(i, v) { return !v; });
       };
     };
@@ -239,6 +253,7 @@ angular.module('myApp').controller('myController', function ($scope) {
       return array;
     };
 
+    $('#responseNext').prop('disabled',true);
     var answersUnshuffled = []
     $('.response input').each(function(i,value){
       answersUnshuffled[i] = {name:$(this).attr('placeholder'),a:$(this).val()}
