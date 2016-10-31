@@ -105,6 +105,12 @@ angular.module('myApp').controller('myController', function ($scope) {
     $('#askquestioninput').prop('disabled', false);
     $('#askquestioninput').val('');
     $('#askquestionnext').hide();
+    //unlock icon
+    var lockbtn = document.getElementById('askquestionbtn');
+    lockbtn.style.background = "rgba(0,220,0,1)";
+    lockbtn.locked = false;
+    lockbtn.innerHTML = '<i class="material-icons" style="font-size:18px">lock_open</i>';
+    lockbtn.disabled = false
 
     $("#playertablewrapper").fadeToggle(function(){
       $("#questionaskwrap").fadeToggle();
@@ -156,6 +162,10 @@ angular.module('myApp').controller('myController', function ($scope) {
     $("#askquestioninput").attr("disabled", true);
     $("#askquestionbtn").attr("disabled", true);
     $scope.questions.push({value:$('#askquestioninput').val(),askedBy:$scope.players[$scope.turn].name})
+
+    //prepare next screen
+
+    
     $("#questionaskwrap").fadeToggle(function(){
       $("#respondwrap").fadeToggle();
       $("#roundquestiontitle").slideToggle();
@@ -170,7 +180,7 @@ angular.module('myApp').controller('myController', function ($scope) {
       var answers = $('#questionrespondwrap').find('input');
       //returns true if everyone has responded
       if(answers.length==answers.filter(":disabled").length){
-          $('#responseNext').fadeToggle()
+          $('#responseNext').fadeIn()
           $('#responseNext').prop('disabled', function(i, v) { return !v; });
       };
     };
@@ -264,11 +274,13 @@ angular.module('myApp').controller('myController', function ($scope) {
       for (var i = $scope.answers.length - 1; i >= 0; i--) {
         if($scope.answers[i].a==answer){
           if($scope.answers[i].name==guess){
-            //add point
-            btn_clicked.style.background = "rgba(0,220,0,1)";
+            //add point and show user success
             $scope.players[$scope.turn].score++;
+            btn_clicked.style.background = "rgba(0,220,0,1)";
+            btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">check</i>';
           }else{
-            //fail
+            //fail            
+            btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">close</i>';
             btn_clicked.style.background = "red";
           };
           areGuessesSubmitted();
