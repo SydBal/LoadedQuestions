@@ -100,8 +100,12 @@ angular.module('myApp').controller('myController', function ($scope) {
     };
     $("#tablenext").attr("disabled", true);     
     $("#helpbutton").fadeIn(3000);
+
+    //preparing next screen
+    $('#askquestioninput').prop('disabled', false);
     $('#askquestioninput').val('');
-    
+    $('#askquestionnext').hide();
+
     $("#playertablewrapper").fadeToggle(function(){
       $("#questionaskwrap").fadeToggle();
       if(($('#gameroundtitle').css('display') == 'none')){
