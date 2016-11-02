@@ -269,10 +269,8 @@ angular.module('myApp').controller('myController', function ($scope) {
       var guesses = $('#guesswrap').find('select');
       //returns true if everyone has responded
       if(guesses.length==guesses.filter(":disabled").length){
-          $('#guessNext').fadeToggle()
-          $('#guessNext').prop('disabled', function(i, v) { 
-            return !v; 
-          });
+          $('#guessNext').fadeIn()
+          $('#guessNext').prop('disabled',false);
       };
     }
 
@@ -292,12 +290,14 @@ angular.module('myApp').controller('myController', function ($scope) {
             $scope.players[$scope.turn].score++;
             btn_clicked.style.background = "rgba(0,220,0,1)";
             btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">check</i>';
+            areGuessesSubmitted();
+            break
           }else{
             //fail            
             btn_clicked.innerHTML = '<i class="material-icons" style="font-size:18px">close</i>';
             btn_clicked.style.background = "red";
+            areGuessesSubmitted();
           };
-          areGuessesSubmitted();
         };
       };
     };
