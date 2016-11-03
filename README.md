@@ -1,7 +1,8 @@
 # LoadedQuestions
 By: **Dominic Balassone**
 ## Requirements
-Node.js
+Node.js - nodejs.org
+
 ## Setup Instructions
 Before anything else, navigate to the cloned directory and run:
 
