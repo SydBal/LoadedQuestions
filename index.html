@@ -6,18 +6,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <link rel="shortcut icon" href="/public/img/bubble.png"/>
-    <meta name="description" content="Don't shoot yourself in the foot!">
+
+    <!-- Favicon Helper : http://realfavicongenerator.net/favicon_result?file_id=p1b0kjdlrs17m7v83u7fahn2in6#.WBrwuforKUk -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/public/img/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/public/img/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/public/img/manifest.json">
+    <link rel="mask-icon" href="/public/img/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/public/img/favicon.ico">
+    <meta name="msapplication-config" content="/public/img/browserconfig.xml">
+    <meta name="theme-color" content="#efefff">
+
+    <meta name="description" content="XX Under Constructions XX">
     <meta name="author" content="Dominic Balassone">
     <title>Loaded Questions</title>
-    <!-- Angular Routing -->
-    <base href="/">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <!-- Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-    <!-- underscoee -->
+    <!-- Angular Routing Help -->
+    <base href="/">
+    <!-- Underscore  (for Angular) -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -26,16 +36,32 @@
   </head>
 
   <body ng-controller="myController">
+
     <!--
-    ScoreToggle
+     Top Banner
+    -->
+		<div id="topTron" class="jumbotron halfscreen shadow">
+			<div id="topText">				
+				<h1>
+					<strong><em><span id="fL">L</span></em></strong>oaded <strong><em><span id="fL">Q</span></em></strong>uestions
+				</h1>
+        <h3 id="gamesetuptitle">Who's playing?</h3>
+        <h3 id="gamereadytitle">Let's get started</h3>
+        <h3 id="gameroundtitle">Round {{round}}: {{players[turn].name}}</h3>
+        <h3 id="roundquestiontitle">Q: "{{questions[turn].value}}"</h3>
+			</div>		
+		</div>
+
+    <!--
+     ScoreboardToggle
     -->
     <i id="helpbutton" class="material-icons" ng-click="showHelpMenu()">help</i>
     <div id="playertabletoggle">
       <h4>
-        <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
-          <tr style="padding:0px;">
-            <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
-            <th><h3 style="margin-top:10px">Points</h3></th>
+        <table class="shadow">
+          <tr>
+            <th><h3>Player</h3></th>
+            <th><h3>Points</h3></th>
           </tr>
           <tr ng-repeat="player in players" id="scoretable">
             <td><h4>{{player.name}}</h4></td>
@@ -44,17 +70,8 @@
         </table>
       </h4>
     </div>
-		<div id="topTron" class="jumbotron halfscreen shadow">
-			<div id="topText">				
-				<h1>
-					<strong><em><span style="text-shadow: 2px 2px #ff0000;">L</span></em></strong>oaded <strong><em><span style="text-shadow: 2px 2px #ff0000;">Q</span></em></strong>uestions
-				</h1>
-        <h3 id="gamesetuptitle" style="display:none;margin-top: 10px">Who's playing?</h3>
-        <h3 id="gamereadytitle" style="display:none;margin-top: 10px">Let's get started</h3>
-        <h3 id="gameroundtitle" style="display:none;margin-top: 10px;display:none">Round {{round}}: {{players[turn].name}}</h3>
-        <h3 id="roundquestiontitle" style="display:none;margin-top: 6px">Q: "{{questions[turn].value}}"</h3>
-			</div>		
-		</div>
+
+    <!-- Bot Banner -->
 		<div id="botTron" class="jumbotron halfscreen">
 			<div id="botText">
         <!--
@@ -64,17 +81,18 @@
 					<h3 style="margin-top:10px">
 						<button class="gamebtn shadow" id="newgamebtn">New Game</button>
 					</h3>
-					<div id="instr" style="display:none;">
+					<div id="instr">
 						<div class="container">
 						  What's the best thing you can do with 3 or more people?
 						</div>
 					</div>
 				</div>
+
         <!--
         SIGN UP
         -->
         <div id="playersignup">
-          <h3 style="margin-bottom:0;margin-top:15px;1">
+          <h3 style="margin-bottom:0;margin-top:10px;">
           <ul ng-repeat="player in players" id="playersignuplist">
               <li><!--{{$index + 1}}--><span style="padding:4px 4px;padding-left:4px;max-width: 300px">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer($index);" class="gamebtn rnd-gb"><i class="material-icons" style="font-size:18px">clear</i></button></li>
           </ul>
@@ -89,6 +107,7 @@
 
           <button ng-click="startgame()" class="gamebtn shadow" style="margin:2px;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
         </div>
+
         <!--
         SCOREBOARD
         -->
@@ -96,7 +115,7 @@
           <div id="playertable" >
             <h4 style="text-shadow: none;">
             <div style="padding-bottom: 14px">Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div></h4>
-            <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
+            <table class="shadow">
               <tr style="padding:0px;">
                 <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
                 <th><h3 style="margin-top:10px">Points</h3></th>
@@ -113,6 +132,7 @@
             </h3>
           </div>
         </div>
+
         <!--
         ASK QUESTION
         -->
@@ -131,6 +151,7 @@
             <h3 style="margin:0;">Next</h3>
           </button>
         </div>
+
         <!--
         RESPOND
         -->
@@ -148,6 +169,7 @@
           </div>
           <button id="responseNext" ng-click="submitAnswers()" class="gamebtn shadow" style="display:none" disabled=""><h3 style="margin:0;">Next</h3></button>
         </div>
+
         <!--
         GUESS
         -->
@@ -175,7 +197,11 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 		<!-- Latest compiled BootstrapJS -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<!-- My JS -->
+
+		<!--
+      \ Have fun! :)
+     -->
     <script src="/public/js/app.js"></script>
+
   </body>
 </html>

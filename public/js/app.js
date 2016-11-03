@@ -126,6 +126,7 @@ angular.module('myApp').controller('myController', function ($scope) {
   //Help menu button press
   $scope.showHelpMenu = function(){
     $("#playertabletoggle").slideToggle();
+    $("helpbutton").text('close');
   };
 
   //lock in question, or unlock
