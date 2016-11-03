@@ -22,7 +22,7 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="/public/style.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/style.css">
   </head>
 
   <body ng-controller="myController">
@@ -30,18 +30,19 @@
     ScoreToggle
     -->
     <i id="helpbutton" class="material-icons" ng-click="showHelpMenu()">help</i>
-    <div id="playertabletoggle" >
-      <h4 style="text-shadow: none;margin-top: 0">
-      <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
-        <tr style="padding:0px;">
-          <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
-          <th><h3 style="margin-top:10px">Points</h3></th>
-        </tr>
-        <tr ng-repeat="player in players" id="scoretable">
-          <td><h4>{{player.name}}</h4></td>
-          <td><h4>{{player.score}}</h4></td>
-        </tr>
-      </table></h4>
+    <div id="playertabletoggle">
+      <h4>
+        <table align="center" style="margin: 0px auto;text-shadow:none;color:navy;text-align:center;padding:10px;border:1px solid navy;border-radius:10px;padding:10px;" class="shadow">
+          <tr style="padding:0px;">
+            <th style="text-align:center;"><h3 style="margin-top:10px">Player</h3></th>
+            <th><h3 style="margin-top:10px">Points</h3></th>
+          </tr>
+          <tr ng-repeat="player in players" id="scoretable">
+            <td><h4>{{player.name}}</h4></td>
+            <td><h4>{{player.score}}</h4></td>
+          </tr>
+        </table>
+      </h4>
     </div>
 		<div id="topTron" class="jumbotron halfscreen shadow">
 			<div id="topText">				
@@ -175,6 +176,6 @@
 		<!-- Latest compiled BootstrapJS -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<!-- My JS -->
-    <script src="/public/app.js"></script>
+    <script src="/public/js/app.js"></script>
   </body>
 </html>
