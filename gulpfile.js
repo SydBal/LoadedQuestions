@@ -16,5 +16,5 @@ gulp.task('default',function() {
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'));
     // Watch for changes (disabled)
-    // gulp.watch('sass/**/*.scss',['styles']);
+    //gulp.watch('sass/**/*.scss',['styles']);
 });
