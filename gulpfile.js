@@ -13,7 +13,7 @@ gulp.task('styles', function() {
 gulp.task('default',function() {
 	// Generate CSS files
 	gulp.src('sass/**/*.scss')
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'));
     // Watch for changes (disabled)
     //gulp.watch('sass/**/*.scss',['styles']);
