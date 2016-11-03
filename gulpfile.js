@@ -13,8 +13,14 @@ gulp.task('styles', function() {
 gulp.task('default',function() {
 	// Generate CSS files
 	gulp.src('sass/**/*.scss')
-        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-        .pipe(gulp.dest('./public/css/'));
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./public/css/'));
     // Watch for changes (disabled)
     //gulp.watch('sass/**/*.scss',['styles']);
 });
+
+// Spawn an express server, could be useful later
+/*var spawn = require('child_process').spawn;
+gulp.task('serve', function() {
+  spawn('node', ['lib/app.js'], { stdio: 'inherit' });
+});*/
