@@ -13,7 +13,7 @@ To serve and view a working version of the game, navigate to the cloned director
 
 `npm start`
 
-and then visit **http://localhost:3000** in the browser of your choice.
+Visit **http://localhost:3000** in the browser of your choice to play.
 
 ### Development
 
