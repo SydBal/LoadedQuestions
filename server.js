@@ -4,6 +4,7 @@ var path    = require('path'),
     app     = express(),
     http    = require('http').createServer(app);
 
+
 // Serve static files
 app.use('/public', express.static(path.join(__dirname + '/public/')));
 
