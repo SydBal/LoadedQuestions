@@ -93,15 +93,6 @@ angular.module('myApp').controller('myController', function ($scope) {
 
   //Table NEXT button press
   $("#tablenext").click(function(){
-    if($scope.turn==$scope.players.length-1){
-      //TODO: check win at round end
-      $scope.round++;
-      $scope.turn=0;
-      $scope.$apply();
-    }else{
-      $scope.turn++;
-      $scope.$apply();
-    };
     $("#tablenext").attr("disabled", true);     
     $("#helpbutton").fadeIn(3000);
 
@@ -117,6 +108,16 @@ angular.module('myApp').controller('myController', function ($scope) {
     lockbtn.disabled = false;
 
     $("#playertablewrapper").fadeToggle(function(){
+      //increment turn counter
+      if($scope.turn==$scope.players.length-1){
+        //TODO: check win at round end
+        $scope.round++;
+        $scope.turn=0;
+        $scope.$apply();
+      }else{
+        $scope.turn++;
+        $scope.$apply();
+      };
       $("#questionaskwrap").fadeToggle();
       if(($('#gameroundtitle').css('display') == 'none')){
         $("#gameroundtitle").slideToggle();
