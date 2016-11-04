@@ -2,8 +2,11 @@ $primeColor : navy;
 $secndColor : white;
 $thirdColor : red;
 
+$primeColor2 : blue;
+
 body{
   word-wrap: break-word;
+  background: $primeColor;
 }
 
 .shadow{
@@ -46,8 +49,7 @@ table{
   color:navy;
   text-align:center;
   padding:10px;
-  border:
-  1px solid navy;
+  border:1px solid navy;
   border-radius:10px;
   padding:10px;
 }
@@ -81,15 +83,23 @@ tr:nth-child(odd){background-color: #FFFFFF}
   display:none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   z-index: 10;
+  background: #282537;
+  background-image: -webkit-radial-gradient(bottom, circle cover, $primeColor2 0%, $primeColor 50%);
+  background-image: -moz-radial-gradient(bottom, circle cover, $primeColor2 0%, $primeColor 50%);
+  background-image: -o-radial-gradient(bottom, circle cover, $primeColor2 0%, $primeColor 50%);
+  background-image: radial-gradient(bottom, circle cover, $primeColor2 0%, $primeColor 5%);
 }
 
 #botTron{
 	height:65%;
-	color: navy;
+	color: $secndColor;
   display:none;
-  background-color:$secndColor;
   overflow-x: auto;
   overflow-y: auto;
+  background-image: -webkit-radial-gradient(top, circle cover, $primeColor2 0%, $primeColor 80%);
+  background-image: -moz-radial-gradient(top, circle cover, $primeColor2 0%, $primeColor 80%);
+  background-image: -o-radial-gradient(top, circle cover, $primeColor2 0%, $primeColor 800%);
+  background-image: radial-gradient(top, circle cover, $primeColor2 0%, $primeColor 80%);
 }
 
 #topText{
@@ -121,15 +131,19 @@ tr:nth-child(odd){background-color: #FFFFFF}
   height: 100%;
 }
 .gamebtn{
-	color:navy;
-	background-color:rgba(0,0,0,0);
+	color:$secndColor;
+	background-color:$primeColor2;
 	text-shadow: 1px 1px #ff0000;
-	border:solid;border-radius:2px;
+	border:solid;
+  border-radius:2px;
 	border-width: 1.5px;
+  border-color: red;
 	margin:8px;
 	padding:6px 12px;
 }
 .rnd-gb{
+  border-color: $primeColor;
+  color: $primeColor;
   border-width: 2px;
   text-shadow: none;
 }
