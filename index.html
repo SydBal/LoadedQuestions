@@ -94,7 +94,7 @@
         <div id="playersignup">
           <h3>
           <ul ng-repeat="player in players" id="playersignuplist">
-              <li><span id="playersignuplistelem">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer($index);" class="gamebtn rnd-gb"><i class="material-icons" >clear</i></button></li>
+              <li><span id="playersignuplistelem">{{ player.name }}</span><button id="removeplayerbtn" ng-click="removePlayer($index);" class="gamebtn rnd-gb"><i class="material-icons">clear</i></button></li>
           </ul>
           <div id="input-flex">
             <input type="text" id="playersignupinput" ng-keydown="enternewplayer($event)" placeholder="Name" class="shadow">
@@ -104,15 +104,16 @@
           </div>
           </h3>
           <div id="playerreq">*Requires >3 Players</div>
+          <div id="dupnames">*No duplicate name allowed</div>
 
-          <button ng-click="startgame()" class="gamebtn shadow" style="margin:2px;display:none;" id="gamestartbtn"><h3 style="margin:0">Next</h3></button>
+          <button ng-click="startgame()" class="gamebtn shadow" id="gamestartbtn"><h3>Next</h3></button>
         </div>
 
         <!--
         SCOREBOARD
         -->
         <div id="playertablewrapper" style="display:none;margin-top: 18px">
-          <div id="playertable" >
+          <div id="playertable">
             <h4 style="text-shadow: none;">
             <div>Reach <STRONG style="text-shadow: 1px 1px #ff0000;">{{winScore}}</STRONG> Points to <STRONG style="text-shadow: 1px 1px #ff0000;"">Win!</STRONG></div></h4>
             <table class="shadow">
@@ -146,7 +147,7 @@
               <i class="material-icons">lock_open</i>
             </button>
           </h3>
-          <div id="questionreq" style="text-shadow: none;color: red;display:none;">*valid questions end with ?</div>
+          <div id="questionreq">*valid questions end with a ?</div>
           <button id="askquestionnext" class="gamebtn shadow" ng-click="submitQuestion()" style="display:none;margin:2px">
             <h3 style="margin:0;">Next</h3>
           </button>
@@ -162,7 +163,7 @@
               <h3>
                 <input id="answerInput" type="text" placeholder="{{players[$index].name}}" class="shadow">
                 <button id="addanswerbtn" ng-click="addAnswer($event);" class="gamebtn rnd-gb shadow lock-button">
-                  <i class="material-icons" >lock_open</i>
+                  <i class="material-icons">lock_open</i>
                 </button>
               </h3>
             </div>

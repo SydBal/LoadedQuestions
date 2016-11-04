@@ -42,13 +42,17 @@ angular.module('myApp').controller('myController', function ($scope) {
     for (var i = $scope.players.length - 1; i >= 0; i--) {
       if($scope.players[i].name == newPlayer){
         isNewName = false;
-      };
+        $('#dupnames').fadeIn();
+      }else{
+        $("#dupnames").fadeOut();
+      }
     };
     //add to player list and prepare for the next user
     if(newPlayer != '' && isNewName){
       $scope.players.push({name:newPlayer,"score":0})
       $("#playersignupinput").val('');
       if($scope.players.length==3){
+
         $("#playerreq").fadeToggle(function(){
           $('#gamestartbtn').fadeIn();
         });

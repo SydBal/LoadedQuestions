@@ -224,9 +224,15 @@ tr:nth-child(odd){background-color: $primeColor2}
   display:inline-flex;
 }
 
-#playerreq{
+#playerreq, #questionreq, #dupnames{
   text-shadow: 1px 1px black;
   color: $thirdColor;
+  font-weight: bold;
+  margin-bottom:5px;
+}
+
+#questionreq, #dupnames{
+  display:none;
 }
 
 #askquestionbtn{
