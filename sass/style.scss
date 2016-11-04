@@ -10,9 +10,9 @@ body{
 }
 
 .shadow{
-  -webkit-box-shadow: 0px 2px 4px 0px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-  -moz-box-shadow:    0px 2px 4px 0px #ccc;  /* Firefox 3.5 - 3.6 */
-  box-shadow:         0px 2px 4px 0px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  -webkit-box-shadow: 0px 2px 4px 0px $primeColor2;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    0px 2px 4px 0px $primeColor2;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         0px 2px 4px 0px $primeColor2;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }
 
 #helpbutton{
@@ -46,14 +46,13 @@ body{
 table{
   margin: 0px auto;
   text-shadow:none;
-  color:navy;
+  color:$secndColor;
   text-align:center;
   padding:10px;
   border:1px solid navy;
   border-radius:10px;
   padding:10px;
 }
-
 th h3{
   margin-top:10px;
 }
@@ -63,8 +62,8 @@ td h4{
 th, td {
   padding: 5px;
 }
-tr:nth-child(even){background-color: #f9f9f9}
-tr:nth-child(odd){background-color: #FFFFFF}
+tr:nth-child(even){background-color: $primeColor}
+tr:nth-child(odd){background-color: $primeColor2}
 
 .halfscreen{
 	position:relative;
@@ -72,7 +71,7 @@ tr:nth-child(odd){background-color: #FFFFFF}
 	margin-bottom: 0;
 	text-align: center;
 	overflow-y: auto;
-  text-shadow: 1px 1px #ff0000;
+  text-shadow: 1px 1px $thirdColor;
   padding-top:20px;
 }
 
@@ -129,54 +128,85 @@ tr:nth-child(odd){background-color: #FFFFFF}
 	overflow-y: auto;
   padding-bottom: 10px;
   height: 100%;
+  h3{
+    margin-top:10px
+  }
 }
+
 .gamebtn{
 	color:$secndColor;
-	background-color:$primeColor2;
+	background-color:$primeColor;
 	text-shadow: 1px 1px #ff0000;
 	border:solid;
   border-radius:2px;
 	border-width: 1.5px;
-  border-color: red;
+  border-color: $primeColor;
 	margin:8px;
 	padding:6px 12px;
+  &:hover{
+    background-color:$primeColor2;
+  }
 }
+
 .rnd-gb{
-  border-color: $primeColor;
-  color: $primeColor;
+  border-color: black;
+  color: black;
   border-width: 2px;
   text-shadow: none;
+  i{
+    font-size:18px
+  }
 }
+
 #instr{
 	text-shadow: none;
   display: none;		
 }
+
 #playersignup {
   display:none;
+  h3{
+    margin-bottom: 0px
+  }
 }
 #playersignupinput {
-  color:navy;
-  background-color:rgba(0,0,0,0);
+  color:white;
+  background-color:$primeColor;
   margin:18px 8px;
   padding:2px;
   border:solid;
   border-radius:2px;
   border-width: 1px;
+  border-color:$primeColor;
   max-width: 50%;
   margin-right: 0
-
 }
+
+#playersignuplistelem {
+  padding:4px 4px;
+  padding-left:4px;
+  max-width: 300px
+}
+
+#gamestartbtn{
+  margin:2px;
+  display:none;
+  h3{
+    margin:0
+  }
+}
+
 #askquestioninput {
-  color:navy;
-  background-color:rgba(0,0,0,0);
+  color:white;
+  background-color:$primeColor;
   margin:18px 8px;
   padding:2px;
   padding-bottom: 2px;
   border:solid;
   border-radius:2px;
+  border-color:$primeColor;
   border-width: 1px;
-  max-width: 50%
-
+  max-width: 50%;
 }
 #playersignuplist{
   text-shadow: none;
@@ -193,6 +223,12 @@ tr:nth-child(odd){background-color: #FFFFFF}
   padding:6px;
   display:inline-flex;
 }
+
+#playerreq{
+  text-shadow: 1px 1px black;
+  color: $thirdColor;
+}
+
 #askquestionbtn{
   border-radius: 100%;
   background-color: rgba(0,220,0,1);
@@ -214,6 +250,17 @@ tr:nth-child(odd){background-color: #FFFFFF}
   margin-left:0px;
   padding:6px;
 }
+
+#answerInput{
+  border-radius: 2px;
+  border-color: navy;
+  max-width: 50%;
+  border-width: 1px;
+  padding:2px;
+  color:$secndColor;
+  background:$primeColor;
+}
+
 #addanswerbtn{
   border-radius: 100%;
   background-color: rgba(0,220,0,1);
