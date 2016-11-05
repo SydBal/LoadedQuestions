@@ -110,7 +110,7 @@ angular.module('myApp').controller('myController', function ($scope) {
     $("#playertablewrapper").fadeToggle(function(){
       //increment turn counter
       if($scope.turn==$scope.players.length-1){
-        //TODO: check win at round end
+        //TODO: check win at round end (break out of loop)
         $scope.round++;
         $scope.turn=0;
         $scope.$apply();
