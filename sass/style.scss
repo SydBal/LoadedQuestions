@@ -169,6 +169,7 @@ tr:nth-child(odd){background-color: $primeColor}
     margin-bottom: 0px
   }
 }
+
 #playersignupinput {
   color:white;
   background-color:$primeColor;
@@ -208,6 +209,7 @@ tr:nth-child(odd){background-color: $primeColor}
   border-width: 1px;
   max-width: 50%;
 }
+
 #playersignuplist{
   text-shadow: none;
   list-style: none;
@@ -216,6 +218,7 @@ tr:nth-child(odd){background-color: $primeColor}
   margin-bottom: 2px;
   word-wrap: break-word;
 }
+
 #addplayerbtn{
   border-radius: 100%;
   background-color: rgba(0,220,0,1);
@@ -242,6 +245,7 @@ tr:nth-child(odd){background-color: $primeColor}
   padding:6px;
   display:inline-flex;
 }
+
 #guessquestionbtn{
   border-radius: 100%;
   background-color: yellow;
@@ -249,6 +253,7 @@ tr:nth-child(odd){background-color: $primeColor}
   padding:6px;
   display:inline-flex;
 }
+
 #removeplayerbtn{
   border-radius: 100%;
   margin:2px 6px;
@@ -286,6 +291,7 @@ tr:nth-child(odd){background-color: $primeColor}
   margin-right: auto;
   min-width: 300px;
 }
+
 #guesswrap .guesses:first-child{
   border-top: none;
 }
